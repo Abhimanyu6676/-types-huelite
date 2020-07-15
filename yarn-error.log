@@ -1,0 +1,63 @@
+Arguments: 
+  C:\node-v10.18.0-win-x64\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+
+PATH: 
+  C:\Users\admin\AppData\Roaming\npm-cache\_npx\10300;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\node-v10.18.0-win-x64;C:\Program Files (x86)\Brackets\command;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\admin\AppData\Local\Yarn\bin;C:\Program Files\Java\jdk-13.0.1\bin;C:\Users\admin\AppData\Local\Android\Sdk\platform-tools;C:\node-v10.18.0-win-x64;
+
+Yarn version: 
+  1.19.1
+
+Node version: 
+  10.18.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141191:19)
+      at Object.onceWrapper (events.js:286:20)
+      at ClientRequest.emit (events.js:198:13)
+      at TLSSocket.emitRequestTimeout (_http_client.js:662:40)
+      at Object.onceWrapper (events.js:286:20)
+      at TLSSocket.emit (events.js:198:13)
+      at TLSSocket.Socket._onTimeout (net.js:443:8)
+      at ontimeout (timers.js:436:11)
+      at tryOnTimeout (timers.js:300:5)
+      at listOnTimeout (timers.js:263:5)
+
+npm manifest: 
+  {
+    "name": "@keystonejs/example-projects-todo",
+    "description": "An example KeystoneJS project showcasing a simple Todo List with a Keystone StaticApp front-end.",
+    "private": true,
+    "version": "5.0.7",
+    "author": "The KeystoneJS Development Team",
+    "repository": "https://github.com/keystonejs/keystone/tree/master/packages/create-keystone-app/example-projects/todo",
+    "homepage": "https://github.com/keystonejs/keystone",
+    "license": "MIT",
+    "engines": {
+      "node": ">=10.0.0"
+    },
+    "scripts": {
+      "dev": "cross-env NODE_ENV=development DISABLE_LOGGING=true keystone dev",
+      "build": "cross-env NODE_ENV=production keystone build",
+      "start": "cross-env NODE_ENV=production keystone start",
+      "create-tables": "keystone create-tables"
+    },
+    "dependencies": {
+      "@keystonejs/adapter-mongoose": "^8.1.0",
+      "@keystonejs/app-admin-ui": "^6.0.0",
+      "@keystonejs/app-graphql": "^5.1.7",
+      "@keystonejs/app-static": "^5.1.2",
+      "@keystonejs/fields": "^10.0.0",
+      "@keystonejs/keystone": "^9.0.0",
+      "cross-env": "^7.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
