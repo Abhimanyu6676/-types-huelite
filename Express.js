@@ -9,6 +9,10 @@ class Express {
     app.set("base", "backend");
     app.set("keystone", keystone);
 
+    app.get("/backend/test", function (req, res) {
+      res.send("Hello from HUElite!");
+    });
+
     return app;
   }
 }
