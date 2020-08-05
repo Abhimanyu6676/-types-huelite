@@ -54,12 +54,13 @@ module.exports = {
       apiPath: "/backend/admin/api",
       graphiqlPath: "/backend/admin/graphiql",
     }),
-    new StaticApp({ path: "/", src: "../hue_web/src/serverImages" }),
     new AdminUIApp({
       adminPath: "/backend/admin",
       apiPath: "/backend/admin/api",
       graphiqlPath: "/backend/admin/graphiql",
-      enableDefaultRoute: true,
+      enableDefaultRoute: false,
     }),
+    //new StaticApp({ path: "/", src: "../hue_web/src/serverImages" }),
+    new StaticApp({ path: "/", src: "../HueliteWeb/build", fallback: 'index.html', }),
   ],
 };
