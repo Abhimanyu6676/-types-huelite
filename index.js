@@ -61,6 +61,6 @@ module.exports = {
       enableDefaultRoute: false,
     }),
     //new StaticApp({ path: "/", src: "../hue_web/src/serverImages" }),
-    new StaticApp({ path: "/", src: "../HueliteWeb/build", fallback: 'index.html', }),
+    //new StaticApp({ path: "/", src: "../HueliteWeb/build", fallback: 'index.html', }),
   ],
 };
