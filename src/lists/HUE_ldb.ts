@@ -30,7 +30,7 @@ module.exports = {
 
 export type HUE_DEVICE_LDB_t = {
   id: string,
-  TS?: number,
-  DST?: number,
-  DBS?: number,
+  TS: number,
+  DST: number,
+  DBS: number,
 }

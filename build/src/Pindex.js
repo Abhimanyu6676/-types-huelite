@@ -36,14 +36,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.publish = void 0;
 var express = require("express");
 //@ts-ignore
 var _a = require("./index"), keystone = _a.keystone, apps = _a.apps;
 var mqtt = require("mqtt");
-var log = require("./src/util/constants").log;
-var _b = require("./src/mqtt/onReceive"), onMessage = _b.onMessage, mqttOnMessageCallback = _b.mqttOnMessageCallback;
-var addNewProduct = require("./src/dbHelper/productDbHelper").addNewProduct;
-var mqttTimerLdbHandler = require("./src/mqtt/ldbHandlers/timerLDB").mqttTimerLdbHandler;
+var log = require("./util/constants").log;
+var onReceive_1 = require("./mqtt/onReceive");
+var productDbHelper_1 = require("./services/dbHelper/productDbHelper");
+var timerLdbMqttHandler_1 = require("./mqtt/mqttLdbHandlers/timerLdbMqttHandler");
 keystone
     .prepare({
     apps: apps,
@@ -53,7 +54,7 @@ keystone
     .then(function (_a) {
     var middlewares = _a.middlewares;
     return __awaiter(void 0, void 0, void 0, function () {
-        var app, pro;
+        var app, product;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, keystone.connect()];
@@ -61,32 +62,28 @@ keystone
                     _b.sent();
                     app = express();
                     app.use(middlewares).listen(4000);
-                    mqttOnMessageCallback.push(mqttTimerLdbHandler);
-                    return [4 /*yield*/, addNewProduct({ Mac: "lwawabjbv" }, function (s) { console.log("==>" + s); })];
+                    //TODO add this to setup function
+                    onReceive_1.mqttOnMessageCallback.push(timerLdbMqttHandler_1.mqttTimerLdbHandler);
+                    return [4 /*yield*/, productDbHelper_1.findProductWithMac("BC:DD:C2:9D:30:156", function (s) { console.log("==>" + s); })];
                 case 2:
-                    pro = _b.sent();
-                    console.log("--------------------------" + JSON.stringify(pro));
+                    product = _b.sent();
+                    console.log("9999999999999--------------- " + JSON.stringify(product));
                     return [2 /*return*/];
             }
         });
     });
 });
 var client = mqtt.connect("mqtt://192.168.1.6");
-client.subscribe("$share/group/HUE/+/up", { qos: 2 }, function () {
-    console.log("Subscribed to wildcard topic");
-});
-client.subscribe("pHUE/+/upt", { qos: 2 }, function () {
-    console.log("Subscribed to wildcard topic");
-});
 client.on("connect", function () {
-    //@ts-ignore
-    client.subscribe("presence", function (err) {
-        if (!err) {
-            client.publish("presence", "Hello mqtt");
-        }
+    client.subscribe("$share/group/HUE/+/up", { qos: 0 }, function () {
+        console.log("Subscribed to wildcard topic");
     });
 });
 client.on("message", function (topic, message) {
-    log("\n\nThis is client " + process.pid);
-    onMessage(topic, message);
+    console.log("\n\nThis is client " + process.pid);
+    onReceive_1.onMessage(topic, message);
 });
+exports.publish = function (topic, payload, qos) {
+    if (qos === void 0) { qos = 0; }
+    client.publish(topic, payload);
+};

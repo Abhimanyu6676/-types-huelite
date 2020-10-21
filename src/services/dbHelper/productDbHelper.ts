@@ -1,4 +1,11 @@
-const { keystone } = require("../../index");
+/**
+ * 
+ * 
+ * //TODO this class works on keystone queries, for better performance this is to be ported to mongoose adapter usage for DB transactions
+ */
+
+
+import { keystone } from "../../index";
 import { logFun_t } from "../../index";
 import { HUE_DEVICE_PRODUCT_t } from "../../lists/HUEProduct";
 
@@ -139,8 +146,14 @@ query($Mac:String!){
       HostName
       deviceName
       groupName
+      lastState
       timers{
         id
+        HR
+        MIN
+        DAYS
+        DT
+        ET
         ldb{
           id
           TS
@@ -157,8 +170,8 @@ type findProductWithMac_t = (Mac: string, _log?: logFun_t) => Promise<HUE_DEVICE
 
 export const findProductWithMac: findProductWithMac_t = async (Mac, _log) => {
     const log = (s: string) => { _log && _log(" *find product with mac*" + s) }
+    ///find product
     const product = await keystone
-        ///find product
         .executeQuery(gql_findProductWithMac(), {
             variables: { Mac },
         }).then(({ data: { allHueProducts }, errors }: any) => {

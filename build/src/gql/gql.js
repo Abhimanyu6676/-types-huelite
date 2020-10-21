@@ -1,8 +1,4 @@
 "use strict";
-/**
- * filter HUE_PRODUCT with MAC Address
- */
-var findProductWithMac = "\n  query($Mac: String) {\n    allHueProducts(first :1, where: { Mac: $Mac }) {\n      id\n      HostName\n      IP\n      lastState\n      Mac\n    }\n  }\n";
 var gql_addProduct = "\nmutation($Mac: String!) {\n  createHueProduct(data: { Mac: $Mac }) {\n    id\n  }\n}";
 /**
  * find specific hueTimer with LDB.DST and MAC
@@ -12,6 +8,8 @@ var gql_addProduct = "\nmutation($Mac: String!) {\n  createHueProduct(data: { Ma
  * @param DST DB Specifier Type
  *
  * @returns Array of Matching Timers timer: { ldb:{ TS, DST, DBS }}
+ *
+ * @deprecated
  *
  */
 var findHueTimerWithMACnLDB_DST = "\nquery($DST:Int, $Mac:String){\n  allHueTimers( first :1, where : { AND : [{device: {Mac:$Mac}}, \n    {ldb: {DST : $DST} }]}){\n      id\n      HR\n      MIN\n      DT\n      ET\n      DAYS\n      ldb{\n        id\n        TS\n        DST\n        DBS\n      }\n  }\n}";
@@ -35,6 +33,8 @@ var updateTimerwithId = "\nmutation(\n  $id:ID!,\n  $HR:Int,\n  $MIN:Int,\n  $DT
  * @param DST DBSpecifier_t
  *
  * @param DBS LDB_DATA_SYNC_STATUS
+ *
+ * @deprecated
  */
 var updatetimerldbwithID = "\nmutation(\n  $id:ID!,\n  $TS:Int!,\n  $DST:Int!,\n  $DBS:Int!,\n) {\n   updateHueLdb( id:$id, data:{\n    TS:$TS,\n    DST:$DST,\n    DBS:$DBS,\n  }){\n    id\n\t  TS\n    DST\n    DBS\n  }\n}";
 module.exports = {
@@ -43,5 +43,4 @@ module.exports = {
     createNewTimerForDeviceByMac: createNewTimerForDeviceByMac,
     findHueTimerWithMACnLDB_DST: findHueTimerWithMACnLDB_DST,
     gql_addProduct: gql_addProduct,
-    findProductWithMac: findProductWithMac
 };

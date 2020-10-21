@@ -23,6 +23,7 @@ const HUE_LDB_Schema = require("./lists/HUE_ldb");
 
 //::Custom Imports
 import { Express } from "./Express";
+import { timerUpdateResolverInput, timerUpdateResolverOutput, type_TimerObj, timerUpdateResolver, type_timerLdbObj, createTimerResolverOutput, createTimerWithMacResolver } from "./services/resolvers/timerResolver";
 
 //::Server Configurations
 const PROJECT_NAME = "hue_server";
@@ -30,7 +31,7 @@ const adapterConfig = { mongoUri: "mongodb://localhost:27017/huelite" };
 
 //::Keystone Configurations
 //@ts-ignore
-const keystone = new Keystone({
+export const keystone = new Keystone({
   name: PROJECT_NAME,
   //adapter: new Adapter(adapterConfig),
   adapter: new MongooseAdapter(adapterConfig),
@@ -51,6 +52,34 @@ export const HUE_PRODUCTS = keystone.createList("hue_product", HUE_PRODUCT_Schem
 //@ts-ignore
 export const HUE_TIMERS = keystone.createList("hue_timer", HUE_TIMER_Schema);
 export const HUE_LDB = keystone.createList("hue_ldb", HUE_LDB_Schema);
+
+
+
+keystone.extendGraphQLSchema({
+  types: [
+    {
+      type: timerUpdateResolverOutput,
+    }, {
+      type: type_TimerObj,
+    }, {
+      type: type_timerLdbObj,
+    }, {
+      type: createTimerResolverOutput,
+    }
+  ],
+  mutations: [
+    {
+      schema: 'updateTimer(Mac: String!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, TS: Int!, DST: Int!, DBS: Int!): timerUpdateResolverOutput',
+      resolver: timerUpdateResolver,
+    }, {
+      schema: 'createTimerWithDeviceMac(Mac: String!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, TS: Int!, DST: Int!, DBS: Int!): createTimerResolverOutput',
+      resolver: createTimerWithMacResolver
+    }
+  ],
+  queries: [],
+});
+
+
 
 //::keystone Apps
 module.exports = {

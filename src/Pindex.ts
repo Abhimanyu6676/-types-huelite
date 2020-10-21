@@ -3,9 +3,11 @@ const express = require("express");
 const { keystone, apps } = require("./index");
 var mqtt = require("mqtt");
 const { log } = require("./util/constants");
-import { onMessage, mqttOnMessageCallback } from "./mqtt/onReceive";
+import { onMessage, mqttOnMessageCallback, mqLog_t } from "./mqtt/onReceive";
 import { addNewProduct, findProductWithMac } from "./services/dbHelper/productDbHelper";
 import { mqttTimerLdbHandler } from "./mqtt/mqttLdbHandlers/timerLdbMqttHandler";
+import { HUE_TIMERS } from ".";
+import { mqttTimeHandler } from "./mqtt/mqttTimeHandler";
 
 keystone
   .prepare({
@@ -19,10 +21,13 @@ keystone
     app.use(middlewares).listen(4000);
     //TODO add this to setup function
     mqttOnMessageCallback.push(mqttTimerLdbHandler);
+    mqttOnMessageCallback.push(mqttTimeHandler)
 
-    const product = await findProductWithMac("BC:DD:C2:9D:30:156", (s) => { console.log("==>" + s); })
 
-    console.log("9999999999999--------------- " + JSON.stringify(product))
+    /*   const { adapter } = HUE_TIMERS;
+      const timer = await adapter.find({ HR: 12 });
+      console.log("---------------------- ");
+      console.log("---------------------- " + JSON.stringify(timer)); */
   });
 
 
@@ -40,11 +45,16 @@ client.on("connect", function () {
 
 
 client.on("message", (topic: string, message: string) => {
-  console.log("\n\nThis is client " + process.pid);
-  onMessage(topic, message);
+  onMessage(topic, message, mqLog);
 });
 
 type publish_t = (topic: string, payload: string, qos?: number) => void
 export const publish: publish_t = (topic, payload, qos = 0) => {
   client.publish(topic, payload);
+}
+
+
+
+const mqLog: mqLog_t = (s) => {
+  if (true) console.log('[[ MQTT ' + process.pid + ' ]]  ' + s);
 }

@@ -46,13 +46,13 @@ module.exports = {
 
 export type HUE_DEVICE_TIMER_t = {
   id: string,
-  device: HUE_DEVICE_PRODUCT_t,
-  HR: number,
-  MIN: number,
-  DT: number,
-  ET: number,
-  DAYS: number,
-  ldb?: HUE_DEVICE_LDB_t[]
+  device?: HUE_DEVICE_PRODUCT_t,
+  HR?: number,
+  MIN?: number,
+  DT?: number,
+  ET?: number,
+  DAYS?: number,
+  ldb?: HUE_DEVICE_LDB_t
   //TODO add LDB to data type timers
 }
 

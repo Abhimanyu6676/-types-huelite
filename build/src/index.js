@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.HUE_LDB = exports.HUE_TIMERS = exports.HUE_PRODUCTS = void 0;
 var Keystone = require("@keystonejs/keystone").Keystone;
 var TText = require("@keystonejs/fields").Text;
 var GraphQLApp = require("@keystonejs/app-graphql").GraphQLApp;
@@ -11,17 +12,18 @@ var MongoStore = require("connect-mongo")(expressSession);
 //check
 var Adapter = require("@keystonejs/adapter-mongoose").MongooseAdapter;
 //::Lists Imports
-var SubscriberSchema = require("../../src/lists/subscriberList");
-var ProductSchema = require("../../src/lists/productList");
-var VarientSchema = require("../../src/lists/varientList");
-var SelectorDatasetSchema = require("../../src/lists/selectorData");
-var SelectorSchema = require("../../src/lists/selectorList");
-var FeaturesSchema = require("../../src/lists/featuresList");
-var HUE_PRODUCT_Schema = require("../../src/lists/HUEProduct");
-var HUE_TIMER_Schema = require("../../src/lists/HUETimer");
-var HUE_LDB_Schema = require("../../src/lists/HUE_ldb");
+var SubscriberSchema = require("./lists/subscriberList");
+var ProductSchema = require("./lists/productList");
+var VarientSchema = require("./lists/varientList");
+var SelectorDatasetSchema = require("./lists/selectorData");
+var SelectorSchema = require("./lists/selectorList");
+var FeaturesSchema = require("./lists/featuresList");
+var HUE_PRODUCT_Schema = require("./lists/HUEProduct");
+var HUE_TIMER_Schema = require("./lists/HUETimer");
+var HUE_LDB_Schema = require("./lists/HUE_ldb");
 //::Custom Imports
 var Express_1 = require("./Express");
+var timerResolver_1 = require("./services/resolvers/timerResolver");
 //::Server Configurations
 var PROJECT_NAME = "hue_server";
 var adapterConfig = { mongoUri: "mongodb://localhost:27017/huelite" };
@@ -43,10 +45,28 @@ keystone.createList("varient", VarientSchema);
 keystone.createList("selectorDataset", SelectorDatasetSchema);
 keystone.createList("selector", SelectorSchema);
 keystone.createList("featuresList", FeaturesSchema);
-var HUE_PRODUCTS = keystone.createList("hue_product", HUE_PRODUCT_Schema);
+exports.HUE_PRODUCTS = keystone.createList("hue_product", HUE_PRODUCT_Schema);
 //@ts-ignore
-var HUE_TIMERS = keystone.createList("hue_timer", HUE_TIMER_Schema);
-var HUE_LDB = keystone.createList("hue_ldb", HUE_LDB_Schema);
+exports.HUE_TIMERS = keystone.createList("hue_timer", HUE_TIMER_Schema);
+exports.HUE_LDB = keystone.createList("hue_ldb", HUE_LDB_Schema);
+keystone.extendGraphQLSchema({
+    types: [
+        {
+            type: timerResolver_1.timerUpdateResolverOutput,
+        }, {
+            type: timerResolver_1.updateTimer_timerObj,
+        }, {
+            type: timerResolver_1.updateTimer_timerLDBObj,
+        }
+    ],
+    mutations: [
+        {
+            schema: 'updateTimer(Mac: String!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, TS: Int!, DST: Int!, DBS: Int!): timerUpdateResolverOutput',
+            resolver: timerResolver_1.timerUpdateResolver,
+        },
+    ],
+    queries: [],
+});
 //::keystone Apps
 module.exports = {
     keystone: keystone,
@@ -66,7 +86,7 @@ module.exports = {
             enableDefaultRoute: false,
         }),
     ],
-    HUE_PRODUCTS: HUE_PRODUCTS,
-    HUE_TIMERS: HUE_TIMERS,
-    HUE_LDB: HUE_LDB,
+    HUE_PRODUCTS: exports.HUE_PRODUCTS,
+    HUE_TIMERS: exports.HUE_TIMERS,
+    HUE_LDB: exports.HUE_LDB,
 };

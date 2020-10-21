@@ -124,6 +124,8 @@ mutation(
  * @param DST DBSpecifier_t
  *
  * @param DBS LDB_DATA_SYNC_STATUS
+ * 
+ * @deprecated
  */
 const updatetimerldbwithID = `
 mutation(

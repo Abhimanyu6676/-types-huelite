@@ -1,5 +1,6 @@
 "use strict";
-var _a = require("@keystonejs/fields"), Text = _a.Text, Integer = _a.Integer, Checkbox = _a.Checkbox, Select = _a.Select, Relationship = _a.Relationship;
+Object.defineProperty(exports, "__esModule", { value: true });
+var _a = require("@keystonejs/fields"), Integer = _a.Integer, Checkbox = _a.Checkbox, Select = _a.Select, Relationship = _a.Relationship;
 module.exports = {
     fields: {
         device: {

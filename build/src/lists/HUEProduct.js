@@ -1,26 +1,27 @@
 "use strict";
-var _a = require("@keystonejs/fields"), Text = _a.Text, Integer = _a.Integer, Checkbox = _a.Checkbox, Relationship = _a.Relationship;
+Object.defineProperty(exports, "__esModule", { value: true });
+var _a = require("@keystonejs/fields"), TText = _a.Text, Integer = _a.Integer, Checkbox = _a.Checkbox, Relationship = _a.Relationship;
 module.exports = {
     fields: {
         deviceName: {
-            type: Text,
+            type: TText,
         },
         Mac: {
-            type: Text,
+            type: TText,
             isRequired: true,
             isUnique: true,
         },
         HostName: {
-            type: Text,
+            type: TText,
         },
         IP: {
-            type: Text,
+            type: TText,
         },
         groupName: {
-            type: Text,
+            type: TText,
         },
         lastState: {
-            type: Text,
+            type: TText,
         },
         timers: {
             type: Relationship,

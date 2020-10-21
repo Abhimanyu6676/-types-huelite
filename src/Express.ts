@@ -1,4 +1,6 @@
 const express = require("express");
+import { router as authRouter } from "./router/auth/auth";
+
 //const app = express();
 //const aedes = require("aedes");
 //const mqttInstance = aedes();
@@ -37,6 +39,8 @@ export class Express {
     app.get("/backend/test", function (req, res) {
       res.send("Hello from **** HUElite!!");
     });
+
+    app.use('/backend/auth', authRouter)
 
     return app;
   }
