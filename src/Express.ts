@@ -1,5 +1,5 @@
 const express = require("express");
-import { router as authRouter } from "./router/auth/auth";
+import { AuthRouter as authRouter } from "./router/alexaAuth/auth";
 
 //const app = express();
 //const aedes = require("aedes");
