@@ -1,9 +1,5 @@
-const {
-  Integer,
-  Checkbox,
-  Select,
-  Relationship,
-} = require("@keystonejs/fields");
+//@ts-ignore
+const { Integer, Checkbox, Select, Relationship, } = require("@keystonejs/fields");
 
 module.exports = {
   fields: {
@@ -26,11 +22,3 @@ module.exports = {
     },
   },
 };
-
-
-export type HUE_LDB_t = {
-  id: string,
-  TS: number,
-  DST: number,
-  DBS: number,
-}

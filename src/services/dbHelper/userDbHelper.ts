@@ -1,6 +1,6 @@
+import { HUE_USER_t } from "../../../@types/huelite";
 import { logFun_t } from "../../index";
 import { keystone } from "../../index"
-import { HUE_USER_t } from "../../lists/userList";
 
 /**
  * find specific hueTimer with LDB.DST and MAC
@@ -11,7 +11,7 @@ import { HUE_USER_t } from "../../lists/userList";
  *
  */
 export const query_findUserWithEmail: () => string = () => {
-    return `
+  return `
     query(
         $email:String
       ){
@@ -58,25 +58,25 @@ type findUserWithEmail_t = (obj: { email: string }, _log?: logFun_t) => Promise<
  *
  */
 export const findUserWithEmail: findUserWithEmail_t = async ({ email }, _log) => {
-    const log = (s: string) => { _log && _log(" *find timer with MAC & DST* " + s) }
-    const user = await keystone
-        .executeQuery(query_findUserWithEmail(), {
-            variables: {
-                email
-            },
-        }).then(({ data: { allUsers }, errors }: any) => {
-            //TODO verify data
-            log("timer found -- " + JSON.stringify(allUsers))
-            if (allUsers?.length) {
-                return allUsers[0];
-            } else {
-                log("no user found with email: " + email + " ---" + JSON.stringify(errors))
-                return undefined;
-            }
-        }).catch((err: any) => {
-            log("User search with email failed -- " + JSON.stringify(err));
-            return undefined;
-        })
+  const log = (s: string) => { _log && _log("<findUserWithEmail> " + s) }
+  const user = await keystone
+    .executeQuery(query_findUserWithEmail(), {
+      variables: {
+        email
+      },
+    }).then(({ data: { allUsers }, errors }: any) => {
+      //TODO verify data
+      log("user found -- " + JSON.stringify(allUsers))
+      if (allUsers?.length) {
+        return allUsers[0];
+      } else {
+        log("no user found with email: " + email + " ---" + JSON.stringify(errors))
+        return undefined;
+      }
+    }).catch((err: any) => {
+      log("User search with email failed -- " + JSON.stringify(err));
+      return undefined;
+    })
 
-    return user;
+  return user;
 }

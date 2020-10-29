@@ -1,6 +1,4 @@
-import { HUE_DEVICE_TIMER_t as HUE_TIMER_t } from "./HUETimer";
-import { HUE_USER_t } from "./userList";
-
+//@ts-ignore
 const { Text: TText, Integer, Checkbox, Relationship } = require("@keystonejs/fields");
 
 module.exports = {
@@ -41,14 +39,3 @@ module.exports = {
 };
 
 
-export type HUE_DEVICE_t = {
-  id: string,
-  Mac: string,
-  IP?: string,
-  deviceName?: string,
-  groupName?: string,
-  lastState?: string,
-  timers?: HUE_TIMER_t[]
-  user?: HUE_USER_t
-  //add timers to data type timers
-}

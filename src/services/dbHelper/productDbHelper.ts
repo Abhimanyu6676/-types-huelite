@@ -5,9 +5,9 @@
  */
 
 
+import { HUE_DEVICE_t } from "../../../@types/huelite";
 import { keystone } from "../../index";
 import { logFun_t } from "../../index";
-import { HUE_DEVICE_t } from "../../lists/HUEProduct";
 
 
 /**

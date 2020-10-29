@@ -1,5 +1,4 @@
-import { HUE_TIMERS } from "../../index";
-import { HUE_DEVICE_TIMER_t } from "../../lists/HUETimer";
+import { HUE_TIMER_t } from "../../../@types/huelite";
 import { findProductWithMac } from "../dbHelper/productDbHelper";
 import { createTimerAndLdbWithDeviceId, findTimerWithMacAndDst, query_findHueTimerWithMACAndDst, updateTimerAndLdbWithId } from "../dbHelper/timerDbHelper"
 
@@ -66,7 +65,7 @@ export const timerUpdateResolverOutput =
     "type timerUpdateResolverOutput {  updatedTimer:type_TimerObj!, success: Boolean!, }";
 
 
-type createTimerWithMacResolver_t = (root: any, args: { Mac: string, HR: number, MIN: number, DAYS: number, DT: number, ET: number, TS: number, DST: number, DBS: number }, context: any, _: any, { query }: any) => Promise<{ createTimer: HUE_DEVICE_TIMER_t | undefined, success: boolean }>
+type createTimerWithMacResolver_t = (root: any, args: { Mac: string, HR: number, MIN: number, DAYS: number, DT: number, ET: number, TS: number, DST: number, DBS: number }, context: any, _: any, { query }: any) => Promise<{ createTimer: HUE_TIMER_t | undefined, success: boolean }>
 export const createTimerWithMacResolver: createTimerWithMacResolver_t = async (root, { Mac, HR, MIN, DAYS, DT, ET, TS, DST, DBS }, context: any, _: any, { query }: any) => {
     const log = (s: string) => { console.log("[[ createTimerResolver ]] " + s) }
     const product = await findProductWithMac(Mac, log);

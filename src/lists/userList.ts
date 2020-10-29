@@ -1,13 +1,5 @@
-import { HUE_DEVICE_t } from "./HUEProduct";
-
-const {
-    Integer,
-    Checkbox,
-    Select,
-    Relationship,
-    Password,
-    Text
-} = require("@keystonejs/fields");
+//@ts-ignore
+const { Integer, Checkbox, Select, Relationship, Password, Text } = require("@keystonejs/fields");
 
 module.exports = {
     fields: {
@@ -29,13 +21,3 @@ module.exports = {
         devices: { type: Relationship, ref: "hue_product.user", many: true, }
     },
 };
-
-
-export type HUE_USER_t = {
-    id: string,
-    userName?: string,
-    email: string,
-    fbId?: string,
-    googleId?: string
-    devices?: HUE_DEVICE_t[]
-}
