@@ -1,1 +1,3 @@
-export const type = {}
+export const type = {
+test=42
+}
