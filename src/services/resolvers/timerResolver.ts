@@ -35,7 +35,7 @@ export const timerUpdateResolver = async (root: any, args: { Mac: string, HR: nu
             DAYS: args.DAYS,
             DT: args.DT,
             ET: args.ET,
-            LdbId: timerFromQuery.ldb.id,
+            LdbId: timerFromQuery?.ldb?.id,
             TS: args.TS,
             DBS: args.DBS
         })
@@ -74,7 +74,7 @@ export const createTimerWithMacResolver: createTimerWithMacResolver_t = async (r
     var _timer = undefined
     if (product?.id) {
         log("product found proceeding to creating new timer for device -- " + JSON.stringify(product))
-        //TODO create new timer
+        //TODO update timer if exists
         const newTimer = await createTimerAndLdbWithDeviceId({ deviceId: product.id, HR, MIN, DAYS, DT, ET, TS, DST, DBS }, log)
         if (newTimer) {
             _timer = newTimer

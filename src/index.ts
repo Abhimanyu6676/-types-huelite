@@ -6,6 +6,7 @@ const { StaticApp } = require("@keystonejs/app-static");
 const { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 const expressSession = require("express-session");
 const MongoStore = require("connect-mongo")(expressSession);
+const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 //check
 
 const { MongooseAdapter: Adapter } = require("@keystonejs/adapter-mongoose");
@@ -20,6 +21,7 @@ const FeaturesSchema = require("./lists/featuresList");
 const HUE_PRODUCT_Schema = require("./lists/HUEProduct");
 const HUE_TIMER_Schema = require("./lists/HUETimer");
 const HUE_LDB_Schema = require("./lists/HUE_ldb");
+const UserSchema = require("./lists/userList");
 
 //::Custom Imports
 import { Express } from "./Express";
@@ -48,11 +50,20 @@ keystone.createList("varient", VarientSchema);
 keystone.createList("selectorDataset", SelectorDatasetSchema);
 keystone.createList("selector", SelectorSchema);
 keystone.createList("featuresList", FeaturesSchema);
+keystone.createList("user", UserSchema);
 export const HUE_PRODUCTS = keystone.createList("hue_product", HUE_PRODUCT_Schema);
 //@ts-ignore
 export const HUE_TIMERS = keystone.createList("hue_timer", HUE_TIMER_Schema);
 export const HUE_LDB = keystone.createList("hue_ldb", HUE_LDB_Schema);
 
+export const authStrategy = keystone.createAuthStrategy({
+  type: PasswordAuthStrategy,
+  list: 'user',
+  config: {
+    identityField: 'email',
+    secretField: 'password',
+  },
+});
 
 
 keystone.extendGraphQLSchema({
@@ -94,6 +105,7 @@ module.exports = {
       graphiqlPath: "/backend/admin/graphiql",
     }),
     new AdminUIApp({
+      authStrategy,
       adminPath: "/backend/admin",
       apiPath: "/backend/admin/api",
       graphiqlPath: "/backend/admin/graphiql",

@@ -1,5 +1,6 @@
 const express = require("express");
-import { AuthRouter as authRouter } from "./router/alexaAuth/auth";
+import { AuthRouter as authRouter } from "./router/auth/authHandler";
+var bodyParser = require('body-parser')
 
 //const app = express();
 //const aedes = require("aedes");
@@ -34,6 +35,8 @@ export class Express {
     const app = express();
     app.set("base", "backend");
     app.set("keystone", keystone);
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
 
     //@ts-ignore
     app.get("/backend/test", function (req, res) {

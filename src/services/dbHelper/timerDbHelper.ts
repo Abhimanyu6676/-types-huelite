@@ -1,10 +1,7 @@
-import { json } from "express";
 import { logFun_t } from "../../index";
 import { HUE_DEVICE_TIMER_t } from "../../lists/HUETimer";
-import { HUE_DEVICE_LDB_t } from "../../lists/HUE_ldb";
-
+import { HUE_LDB_t } from "../../lists/HUE_ldb";
 import { keystone } from "../../index"
-import { stringify } from "querystring";
 
 /**
  * find specific hueTimer with LDB.DST and MAC
@@ -47,17 +44,7 @@ query( $Mac:String!, $DST:Int!){
  * @returns Array of Matching Timers timer: { ldb:{ TS, DST, DBS }}
  *
  */
-type findTimerWithMacAndDst_t = (obj: { Mac: string, DST: number }, _log?: logFun_t) => Promise<findTimerWithMacAndDst_rt | undefined>
-
-type findTimerWithMacAndDst_rt = {
-    id: string,
-    HR: number,
-    MIN: number,
-    DT: number,
-    ET: number,
-    DAYS: number,
-    ldb: HUE_DEVICE_LDB_t
-}
+type findTimerWithMacAndDst_t = (obj: { Mac: string, DST: number }, _log?: logFun_t) => Promise<HUE_DEVICE_TIMER_t | undefined>
 
 export const findTimerWithMacAndDst: findTimerWithMacAndDst_t = async ({ Mac, DST }, _log) => {
     const log = (s: string) => { _log && _log(" *find timer with MAC & DST* " + s) }
@@ -188,7 +175,7 @@ const query_updateTimerldbwithId = () => {
       }`;
 }
 
-type updateTimerLdbWithId_t = (obj: { id: string, TS: number, DBS: number }, _log?: logFun_t) => Promise<HUE_DEVICE_LDB_t | undefined>
+type updateTimerLdbWithId_t = (obj: { id: string, TS: number, DBS: number }, _log?: logFun_t) => Promise<HUE_LDB_t | undefined>
 export const updateTimerLdbWithId: updateTimerLdbWithId_t = async ({ id, TS, DBS }, _log) => {
     const log = (s: string) => { _log && _log(" *update timer LDB with id* " + s) }
     const updatedTimerLdb = await keystone.executeQuery(query_updateTimerldbwithId(), {

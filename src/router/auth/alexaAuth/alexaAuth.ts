@@ -1,5 +1,5 @@
-const express = require("express");
-export var AuthRouter = express.Router();
+import { AuthRouter } from "../authHandler";
+
 
 AuthRouter.get('/aa', function (req: any, res: any) {
     res.send('Wiki home page');

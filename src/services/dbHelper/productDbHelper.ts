@@ -7,7 +7,7 @@
 
 import { keystone } from "../../index";
 import { logFun_t } from "../../index";
-import { HUE_DEVICE_PRODUCT_t } from "../../lists/HUEProduct";
+import { HUE_DEVICE_t } from "../../lists/HUEProduct";
 
 
 /**
@@ -166,7 +166,7 @@ query($Mac:String!){
 `;
 }
 
-type findProductWithMac_t = (Mac: string, _log?: logFun_t) => Promise<HUE_DEVICE_PRODUCT_t | undefined>
+type findProductWithMac_t = (Mac: string, _log?: logFun_t) => Promise<HUE_DEVICE_t | undefined>
 
 export const findProductWithMac: findProductWithMac_t = async (Mac, _log) => {
     const log = (s: string) => { _log && _log(" *find product with mac*" + s) }

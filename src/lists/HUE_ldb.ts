@@ -7,7 +7,7 @@ const {
 
 module.exports = {
   fields: {
-    db: {
+    db: {/* DB that is related to this ldb */
       type: Relationship,
       ref: "hue_timer.ldb",
       isRequired: true,
@@ -28,7 +28,7 @@ module.exports = {
 };
 
 
-export type HUE_DEVICE_LDB_t = {
+export type HUE_LDB_t = {
   id: string,
   TS: number,
   DST: number,
