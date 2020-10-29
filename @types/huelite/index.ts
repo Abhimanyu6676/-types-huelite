@@ -1,3 +1,3 @@
 export const type = {
-test=42
+    test: 45
 }
