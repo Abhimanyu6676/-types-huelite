@@ -36,54 +36,59 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.publish = void 0;
-var express = require("express");
-//@ts-ignore
-var _a = require("./index"), keystone = _a.keystone, apps = _a.apps;
-var mqtt = require("mqtt");
-var log = require("./util/constants").log;
-var onReceive_1 = require("./mqtt/onReceive");
-var timerLdbMqttHandler_1 = require("./mqtt/mqttLdbHandlers/timerLdbMqttHandler");
-var mqttTimeHandler_1 = require("./mqtt/mqttTimeHandler");
-keystone
-    .prepare({
-    apps: apps,
-    dev: process.env.NODE_ENV !== "production",
-})
-    //@ts-ignore
-    .then(function (_a) {
-    var middlewares = _a.middlewares;
+exports.findUserWithEmail = exports.query_findUserWithEmail = void 0;
+var index_1 = require("../../index");
+/**
+ * find specific hueTimer with LDB.DST and MAC
+ *
+ * @param Email emailID of user
+ *
+ * @returns query
+ *
+ */
+exports.query_findUserWithEmail = function () {
+    return "\n    query(\n        $email:String\n      ){\n        allUsers(where:{email:$email}, first:1){\n          id\n          userName\n          fbId\n          googleId\n          devices{\n            id\n            deviceName\n            Mac\n            groupName\n            lastState\n            IP\n            timers{\n              id\n              HR\n              MIN\n              DAYS\n              DT\n              ET\n              ldb{\n                id\n                TS\n                DST\n                DBS\n              }\n            }\n          }\n        }\n      }";
+};
+/**
+ * find specific hueTimer with LDB.DST and MAC
+ *
+ * @param email emailID of user
+ *
+ * @returns Array of User: { userName, email, fbId, googleId}
+ *
+ */
+exports.findUserWithEmail = function (_a, _log) {
+    var email = _a.email;
     return __awaiter(void 0, void 0, void 0, function () {
-        var app;
+        var log, user;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, keystone.connect()];
+                case 0:
+                    log = function (s) { _log && _log("<findUserWithEmail> " + s); };
+                    return [4 /*yield*/, index_1.keystone
+                            .executeQuery(exports.query_findUserWithEmail(), {
+                            variables: {
+                                email: email
+                            },
+                        }).then(function (_a) {
+                            var allUsers = _a.data.allUsers, errors = _a.errors;
+                            //TODO verify data
+                            log("user found -- " + JSON.stringify(allUsers));
+                            if (allUsers === null || allUsers === void 0 ? void 0 : allUsers.length) {
+                                return allUsers[0];
+                            }
+                            else {
+                                log("no user found with email: " + email + " ---" + JSON.stringify(errors));
+                                return undefined;
+                            }
+                        }).catch(function (err) {
+                            log("User search with email failed -- " + JSON.stringify(err));
+                            return undefined;
+                        })];
                 case 1:
-                    _b.sent();
-                    app = express();
-                    app.use(middlewares).listen(4000);
-                    //TODO add this to setup function
-                    onReceive_1.mqttOnMessageCallback.push(timerLdbMqttHandler_1.mqttTimerLdbHandler);
-                    onReceive_1.mqttOnMessageCallback.push(mqttTimeHandler_1.mqttTimeHandler);
-                    return [2 /*return*/];
+                    user = _b.sent();
+                    return [2 /*return*/, user];
             }
         });
     });
-});
-var client = mqtt.connect("mqtt://192.168.1.6");
-client.on("connect", function () {
-    client.subscribe("$share/group/HUE/+/up", { qos: 0 }, function () {
-        console.log("Subscribed to wildcard topic");
-    });
-});
-client.on("message", function (topic, message) {
-    onReceive_1.onMessage(topic, message, mqLog);
-});
-exports.publish = function (topic, payload, qos) {
-    if (qos === void 0) { qos = 0; }
-    client.publish(topic, payload);
-};
-var mqLog = function (s) {
-    if (true)
-        console.log('[[ MQTT ' + process.pid + ' ]]  ' + s);
 };

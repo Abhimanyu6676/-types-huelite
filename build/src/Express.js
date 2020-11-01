@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Express = void 0;
 var express = require("express");
+var authHandler_1 = require("./router/auth/authHandler");
+var bodyParser = require('body-parser');
 //const app = express();
 //const aedes = require("aedes");
 //const mqttInstance = aedes();
@@ -33,10 +35,13 @@ var Express = /** @class */ (function () {
         var app = express();
         app.set("base", "backend");
         app.set("keystone", keystone);
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use(bodyParser.json());
         //@ts-ignore
         app.get("/backend/test", function (req, res) {
             res.send("Hello from **** HUElite!!");
         });
+        app.use('/backend/auth', authHandler_1.AuthRouter);
         return app;
     };
     return Express;

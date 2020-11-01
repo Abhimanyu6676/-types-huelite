@@ -36,41 +36,92 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.timerUpdateResolverOutput = exports.timerUpdateResolverInput = exports.updateTimer_timerObj = exports.updateTimer_timerLDBObj = exports.timerUpdateResolver = void 0;
+exports.createTimerResolverOutput = exports.createTimerResolverInput = exports.createTimerWithMacResolver = exports.timerUpdateResolverOutput = exports.timerUpdateResolverInput = exports.type_TimerObj = exports.type_timerLdbObj = exports.timerUpdateResolver = void 0;
+var productDbHelper_1 = require("../dbHelper/productDbHelper");
+var timerDbHelper_1 = require("../dbHelper/timerDbHelper");
 var _a = require("@keystonejs/fields"), Integer = _a.Integer, Checkbox = _a.Checkbox, Select = _a.Select, Relationship = _a.Relationship;
 exports.timerUpdateResolver = function (root, args, context, _, _a) {
     var query = _a.query;
     return __awaiter(void 0, void 0, void 0, function () {
-        return __generator(this, function (_b) {
-            //:: query timer
-            /*  const { data } = await query(
-                 ``,
-                 { variables: {} }
-             ); */
-            console.log("\n\n-------------------------------------------------------------------");
-            console.log(JSON.stringify(args));
-            console.log("\n\n-------------------------------------------------------------------");
-            return [2 /*return*/, {
-                    updatedTimer: {
-                        id: "fjxlicyhjkhfxzku,jghv",
-                        HR: 12,
-                        MIN: 54,
-                        DAYS: 1,
-                        DT: 1,
-                        ET: 1,
-                        ldb: {
-                            id: "hfdx,jghv/jl.kch,hf",
-                            TS: 12345567,
-                            DST: 1,
-                            DBS: 1
-                        }
-                    },
-                    success: true,
-                }];
+        var timerFromQuery, updatedTimerNLdb;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, timerDbHelper_1.findTimerWithMacAndDst({ Mac: args.Mac, DST: args.DST })];
+                case 1:
+                    timerFromQuery = _c.sent();
+                    console.log("\n\n-------------------------------------------------------------------");
+                    console.log(JSON.stringify(args));
+                    console.log("\n\n-------------------------------------------------------------------");
+                    console.log("---------------------- " + JSON.stringify(timerFromQuery));
+                    if (!timerFromQuery) return [3 /*break*/, 3];
+                    return [4 /*yield*/, timerDbHelper_1.updateTimerAndLdbWithId({
+                            timerId: timerFromQuery.id,
+                            HR: args.HR,
+                            MIN: args.MIN,
+                            DAYS: args.DAYS,
+                            DT: args.DT,
+                            ET: args.ET,
+                            LdbId: (_b = timerFromQuery === null || timerFromQuery === void 0 ? void 0 : timerFromQuery.ldb) === null || _b === void 0 ? void 0 : _b.id,
+                            TS: args.TS,
+                            DBS: args.DBS
+                        })];
+                case 2:
+                    updatedTimerNLdb = _c.sent();
+                    if (updatedTimerNLdb) {
+                        return [2 /*return*/, {
+                                updatedTimer: updatedTimerNLdb,
+                                success: true
+                            }];
+                    }
+                    _c.label = 3;
+                case 3: return [2 /*return*/, {
+                        updatedTimer: {},
+                        success: false,
+                    }];
+            }
         });
     });
 };
-exports.updateTimer_timerLDBObj = "type updateTimer_timerLDBObj { id:ID!, TS: Int!, DST: Int!, DBS: Int! }";
-exports.updateTimer_timerObj = " type updateTimer_timerObj { id:ID!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, ldb:updateTimer_timerLDBObj! }";
+exports.type_timerLdbObj = "type type_timerLdbObj { id:ID!, TS: Int!, DST: Int!, DBS: Int! }";
+exports.type_TimerObj = " type type_TimerObj { id:ID!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, ldb:type_timerLdbObj! }";
 exports.timerUpdateResolverInput = "input timerUpdateResolverInput {Mac: String!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, TS: Int!, DST: Int!, DBS: Int!}";
-exports.timerUpdateResolverOutput = "type timerUpdateResolverOutput {  updatedTimer:updateTimer_timerObj!, success: Boolean!, }";
+exports.timerUpdateResolverOutput = "type timerUpdateResolverOutput {  updatedTimer:type_TimerObj!, success: Boolean!, }";
+exports.createTimerWithMacResolver = function (root, _a, context, _, _b) {
+    var Mac = _a.Mac, HR = _a.HR, MIN = _a.MIN, DAYS = _a.DAYS, DT = _a.DT, ET = _a.ET, TS = _a.TS, DST = _a.DST, DBS = _a.DBS;
+    var query = _b.query;
+    return __awaiter(void 0, void 0, void 0, function () {
+        var log, product, _success, _timer, newTimer;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    log = function (s) { console.log("[[ createTimerResolver ]] " + s); };
+                    return [4 /*yield*/, productDbHelper_1.findProductWithMac(Mac, log)];
+                case 1:
+                    product = _c.sent();
+                    _success = false;
+                    _timer = undefined;
+                    if (!(product === null || product === void 0 ? void 0 : product.id)) return [3 /*break*/, 3];
+                    log("product found proceeding to creating new timer for device -- " + JSON.stringify(product));
+                    return [4 /*yield*/, timerDbHelper_1.createTimerAndLdbWithDeviceId({ deviceId: product.id, HR: HR, MIN: MIN, DAYS: DAYS, DT: DT, ET: ET, TS: TS, DST: DST, DBS: DBS }, log)];
+                case 2:
+                    newTimer = _c.sent();
+                    if (newTimer) {
+                        _timer = newTimer;
+                        _success = true;
+                        log("New timer created successfully -- " + JSON.stringify(newTimer));
+                    }
+                    return [3 /*break*/, 4];
+                case 3:
+                    log("product cannot be found, skipping product creation");
+                    _c.label = 4;
+                case 4: return [2 /*return*/, {
+                        createTimer: _timer,
+                        success: _success,
+                    }];
+            }
+        });
+    });
+};
+exports.createTimerResolverInput = "input createTimerResolverInput {Mac: String!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, TS: Int!, DST: Int!, DBS: Int!}";
+exports.createTimerResolverOutput = "type createTimerResolverOutput {  createTimer:type_TimerObj, success: Boolean!, }";

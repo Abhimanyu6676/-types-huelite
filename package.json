@@ -11,11 +11,11 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "_build": "tsc",
-    "startTS": "ts-node src/Pindex.ts",
+    "build": "tsc",
+    "start": "ts-node src/Pindex.ts",
     "dev": "cross-env NODE_ENV=development DISABLE_LOGGING=true keystone dev",
-    "build": "cross-env NODE_ENV=production keystone build /build/src/index.js",
-    "start": "cross-env NODE_ENV=production keystone start",
+    "_build": "cross-env NODE_ENV=production keystone build /build/src/index.js",
+    "_start": "cross-env NODE_ENV=production keystone start",
     "nodemon": "cross-env NODE_ENV=development DISABLE_LOGGING=true npx nodemon src/Pindex.ts",
     "_nodemon": "cross-env NODE_ENV=development DISABLE_LOGGING=true npx nodemon build/src/Pindex.js",
     "create-tables": "keystone create-tables"

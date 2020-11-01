@@ -1,4 +1,9 @@
 "use strict";
+/**
+ *
+ *
+ * //TODO this class works on keystone queries, for better performance this is to be ported to mongoose adapter usage for DB transactions
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -37,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findProductWithMac = exports.addNewProduct = void 0;
-var keystone = require("../../index").keystone;
+var index_1 = require("../../index");
 /**
  *
  *
@@ -71,7 +76,7 @@ var _addNewProduct = function (_a) {
     return new Promise(function (resolve, reject) { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, keystone.executeQuery(gql_addProduct(), {
+                case 0: return [4 /*yield*/, index_1.keystone.executeQuery(gql_addProduct(), {
                         variables: {
                             Mac: Mac,
                             IP: IP,
@@ -109,7 +114,7 @@ exports.addNewProduct = function (_a, log) {
         var k;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, keystone.executeQuery(gql_addProduct(), {
+                case 0: return [4 /*yield*/, index_1.keystone.executeQuery(gql_addProduct(), {
                         variables: {
                             Mac: Mac,
                             IP: IP,
@@ -147,7 +152,7 @@ exports.addNewProduct = function (_a, log) {
  * @param Mac MAC address of the devvice to find
  */
 var gql_findProductWithMac = function () {
-    return "\nquery($Mac:String!){\n    allHueProducts(first:1, where:{Mac:$Mac}){\n      id\n      Mac\n      IP\n      HostName\n      deviceName\n      groupName\n      timers{\n        id\n        ldb{\n          id\n          TS\n          DST\n          DBS\n        }\n      }\n    }\n  }\n";
+    return "\nquery($Mac:String!){\n    allHueProducts(first:1, where:{Mac:$Mac}){\n      id\n      Mac\n      IP\n      HostName\n      deviceName\n      groupName\n      lastState\n      timers{\n        id\n        HR\n        MIN\n        DAYS\n        DT\n        ET\n        ldb{\n          id\n          TS\n          DST\n          DBS\n        }\n      }\n    }\n  }\n";
 };
 exports.findProductWithMac = function (Mac, _log) { return __awaiter(void 0, void 0, void 0, function () {
     var log, product;
@@ -155,8 +160,7 @@ exports.findProductWithMac = function (Mac, _log) { return __awaiter(void 0, voi
         switch (_a.label) {
             case 0:
                 log = function (s) { _log && _log(" *find product with mac*" + s); };
-                return [4 /*yield*/, keystone
-                        ///find product
+                return [4 /*yield*/, index_1.keystone
                         .executeQuery(gql_findProductWithMac(), {
                         variables: { Mac: Mac },
                     }).then(function (_a) {

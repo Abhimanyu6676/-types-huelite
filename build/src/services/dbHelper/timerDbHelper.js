@@ -47,8 +47,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTimerAndLdbWithId = exports.updateTimerLdbWithId = exports.updateTimerWithId = exports.findTimerWithMacAndDst = void 0;
-var keystone = require("../../index").keystone;
+exports.createTimerAndLdbWithDeviceId = exports.updateTimerAndLdbWithId = exports.updateTimerLdbWithId = exports.updateTimerWithId = exports.findTimerWithMacAndDst = exports.query_findHueTimerWithMACAndDst = void 0;
+var index_1 = require("../../index");
 /**
  * find specific hueTimer with LDB.DST and MAC
  *
@@ -59,7 +59,7 @@ var keystone = require("../../index").keystone;
  * @returns Array of Matching Timers timer: { ldb:{ TS, DST, DBS }}
  *
  */
-var query_findHueTimerWithMACAndDst = function () {
+exports.query_findHueTimerWithMACAndDst = function () {
     return "\nquery( $Mac:String!, $DST:Int!){\n    allHueTimers( first :1, where : { AND : [\n      {device: {Mac:$Mac}}, \n      {ldb: {DST : $DST} }\n    ]}){\n        id\n        HR\n        MIN\n        DT\n        ET\n        DAYS\n        ldb{\n          id\n          TS\n          DST\n          DBS\n        }\n    }\n  }";
 };
 exports.findTimerWithMacAndDst = function (_a, _log) {
@@ -71,8 +71,8 @@ exports.findTimerWithMacAndDst = function (_a, _log) {
                 case 0:
                     log = function (s) { _log && _log(" *find timer with MAC & DST* " + s); };
                     log(Mac + "  -- " + DST);
-                    return [4 /*yield*/, keystone
-                            .executeQuery(query_findHueTimerWithMACAndDst(), {
+                    return [4 /*yield*/, index_1.keystone
+                            .executeQuery(exports.query_findHueTimerWithMACAndDst(), {
                             variables: {
                                 Mac: Mac,
                                 DST: DST,
@@ -108,7 +108,7 @@ exports.findTimerWithMacAndDst = function (_a, _log) {
  * @param ET event type 1-ON  --  2-OFF @optional
  *
  */
-var query_updateTimerWithId = function () {
+var mutation_updateTimerWithId = function () {
     return "\nmutation(\n  $id:ID!,\n  $HR:Int,\n  $MIN:Int,\n  $DT:Int,\n  $ET:Int,\n  $DAYS:Int,\n) {\n   updateHueTimer( id:$id, data:{\n    HR:$HR,\n    MIN:$MIN,\n    DT:$DT,\n    ET:$ET,\n    DAYS:$DAYS,\n  }){\n    id\n    HR\n\t\tMIN\n    DAYS\n    DT\n    ET\n  }\n}";
 };
 exports.updateTimerWithId = function (_a, _log) {
@@ -119,7 +119,7 @@ exports.updateTimerWithId = function (_a, _log) {
             switch (_b.label) {
                 case 0:
                     log = function (s) { _log && _log(" *update timer with id* " + s); };
-                    return [4 /*yield*/, keystone.executeQuery(query_updateTimerWithId(), {
+                    return [4 /*yield*/, index_1.keystone.executeQuery(mutation_updateTimerWithId(), {
                             variables: {
                                 id: id,
                                 HR: HR,
@@ -168,7 +168,7 @@ exports.updateTimerLdbWithId = function (_a, _log) {
             switch (_b.label) {
                 case 0:
                     log = function (s) { _log && _log(" *update timer LDB with id* " + s); };
-                    return [4 /*yield*/, keystone.executeQuery(query_updateTimerldbwithId(), {
+                    return [4 /*yield*/, index_1.keystone.executeQuery(query_updateTimerldbwithId(), {
                             variables: {
                                 id: id,
                                 TS: TS,
@@ -217,6 +217,79 @@ exports.updateTimerAndLdbWithId = function (_a, _log) {
                     }
                     _b.label = 3;
                 case 3: return [2 /*return*/, undefined];
+            }
+        });
+    });
+};
+/**
+ *
+ * @param obj.deviceId device ID to be connected
+ * @param obj.HR hours 1 - 12
+ * @param obj.MIN minute 0 - 59
+ * @param obj.DAYS integer representing bits
+ * @param obj.DT daytime 1-AM  --  2-PM
+ * @param obj.ET event type 1-ON  --  2-OFF
+ * @param obj.TS timestamp
+ * @param obj.DST DBSpecifier as Int
+ * @param obj.DBS LDB_DATA_SYNC_STATUS_t
+ * @param _log @optional
+ */
+var mutation_createTimerAndLdbWithDeviceId = function () {
+    return "\n    mutation(\n        $deviceId:ID!,\n        $HR:Int!,\n        $MIN:Int!,\n        $DT:Int!,\n        $ET:Int!,\n        $DAYS:Int!,\n        $TS:Int!,\n        $DBS:Int!,\n        $DST:Int!\n      ) {\n         createHueTimer(data:{\n          device:{connect:{id:$deviceId}},\n          HR:$HR,\n          MIN:$MIN,\n          DT:$DT,\n          ET:$ET,\n          DAYS:$DAYS,\n          ldb:{\n           create:{\n            TS:$TS,\n            DBS:$DBS,\n            DST:$DST\n            }\n          }\n        }){\n          id\n          HR\n          MIN\n          DAYS\n          DT\n          ET\n          ldb{\n            id\n            TS\n            DST\n            DBS\n          }\n        }\n      }";
+};
+/**
+ *
+ * @param obj.deviceId device ID to be connected
+ * @param obj.HR hours 1 - 12
+ * @param obj.MIN minute 0 - 59
+ * @param obj.DAYS integer representing bits
+ * @param obj.DT daytime 1-AM  --  2-PM
+ * @param obj.ET event type 1-ON  --  2-OFF
+ * @param obj.TS timestamp
+ * @param obj.DST DBSpecifier as Int
+ * @param obj.DBS LDB_DATA_SYNC_STATUS_t
+ * @param _log @optional
+ */
+exports.createTimerAndLdbWithDeviceId = function (_a, _log) {
+    var deviceId = _a.deviceId, HR = _a.HR, MIN = _a.MIN, DAYS = _a.DAYS, DT = _a.DT, ET = _a.ET, TS = _a.TS, DST = _a.DST, DBS = _a.DBS;
+    return __awaiter(void 0, void 0, void 0, function () {
+        var log, newTimer;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    log = function (s) { _log && _log(" *create timer AND LDB with deviceId* " + s); };
+                    log("\n\n" + JSON.stringify({ deviceId: deviceId, HR: HR, MIN: MIN, DAYS: DAYS, DT: DT, ET: ET, TS: TS, DST: DST, DBS: DBS }));
+                    return [4 /*yield*/, index_1.keystone.executeQuery(mutation_createTimerAndLdbWithDeviceId(), {
+                            variables: {
+                                deviceId: deviceId,
+                                HR: HR,
+                                MIN: MIN,
+                                DAYS: DAYS,
+                                DT: DT,
+                                ET: ET,
+                                TS: TS,
+                                DST: DST,
+                                DBS: DBS,
+                            }
+                        }).then(function (_a) {
+                            var createHueTimer = _a.data.createHueTimer;
+                            if (createHueTimer === null || createHueTimer === void 0 ? void 0 : createHueTimer.id) {
+                                log("new timer created successfully -- " + JSON.stringify(createHueTimer));
+                                return createHueTimer;
+                            }
+                            else {
+                                log("new timer could not be crceated -- ");
+                            }
+                        }).catch(function (errors) {
+                            log("Create timer query failed -- " + JSON.stringify(errors));
+                            return undefined;
+                        })
+                        //LTO:  return newly created timer
+                    ];
+                case 1:
+                    newTimer = _b.sent();
+                    //LTO:  return newly created timer
+                    return [2 /*return*/, newTimer];
             }
         });
     });

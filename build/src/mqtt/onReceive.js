@@ -37,10 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onMessage = exports.mqttOnMessageCallback = void 0;
-//@ts-ignore
-var _a = require("../index"), keystone = _a.keystone, apps = _a.apps, HUE_TIMERS = _a.HUE_TIMERS;
-var _b = require("../util/constants"), MQTT_UPSTREAM_LDB_TS_SYNC_PAYLOAD = _b.MQTT_UPSTREAM_LDB_TS_SYNC_PAYLOAD, MQTT_DOWNSTREAM_TIMER_REQUEST_PAYLOAD = _b.MQTT_DOWNSTREAM_TIMER_REQUEST_PAYLOAD, MQTT_DOWNSTREAM_TIMER_PAYLOAD = _b.MQTT_DOWNSTREAM_TIMER_PAYLOAD, MQTT_UPSTREAM_TIMER_PAYLOAD = _b.MQTT_UPSTREAM_TIMER_PAYLOAD, logSectionStart = _b.logSectionStart, logSectionEnd = _b.logSectionEnd, log = _b.log;
-var _c = require("../gql/gql"), updatetimerldbwithID = _c.updatetimerldbwithID, updateTimerwithId = _c.updateTimerwithId, createNewTimerForDeviceByMac = _c.createNewTimerForDeviceByMac, findHueTimerWithMACnLDB_DST = _c.findHueTimerWithMACnLDB_DST, gql_addProduct = _c.gql_addProduct, findProductWithMac = _c.findProductWithMac;
+exports.mqttOnMessageCallback = [];
 /**
  * @param (topic, payload)
  *
@@ -48,21 +45,24 @@ var _c = require("../gql/gql"), updatetimerldbwithID = _c.updatetimerldbwithID, 
  *    `payload<String>` - message data as string
  * if returned true call will not be farworded to rest of the array
  */
-exports.mqttOnMessageCallback = [];
-exports.onMessage = function (topic, payload) {
-    mqLog("ON MQTT DATA pid : " + process.pid + ". payload : " + payload);
-    exports.mqttOnMessageCallback.forEach(function (cb) { return __awaiter(void 0, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, cb(topic, payload, function (s) { mqLog("[[ onMessage ]] " + s); })];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    mqLog("***********ON MQTT DATA***********");
-};
-var mqLog = function (s) {
-    console.log('[[ MQTT ' + process.pid + ' ]]  ' + s);
+exports.onMessage = function (topic, payload, mqLog) {
+    var log = function (s) {
+        mqLog("[[ onMessage ]] " + s);
+    };
+    log("ON MQTT DATA pid : " + process.pid + ". payload : " + payload);
+    var topicArray = topic.split("/");
+    if (topicArray.length >= 3) {
+        var Mac = topicArray[1];
+        exports.mqttOnMessageCallback.forEach(function (cb) { return __awaiter(void 0, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, cb(Mac, payload, log)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    }
+    log("***********ON MQTT DATA***********");
 };

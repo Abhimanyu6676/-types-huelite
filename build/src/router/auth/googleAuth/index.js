@@ -36,54 +36,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.publish = void 0;
+exports.googleAuthRouter = void 0;
+var passport = require('passport');
 var express = require("express");
-//@ts-ignore
-var _a = require("./index"), keystone = _a.keystone, apps = _a.apps;
-var mqtt = require("mqtt");
-var log = require("./util/constants").log;
-var onReceive_1 = require("./mqtt/onReceive");
-var timerLdbMqttHandler_1 = require("./mqtt/mqttLdbHandlers/timerLdbMqttHandler");
-var mqttTimeHandler_1 = require("./mqtt/mqttTimeHandler");
-keystone
-    .prepare({
-    apps: apps,
-    dev: process.env.NODE_ENV !== "production",
-})
-    //@ts-ignore
-    .then(function (_a) {
-    var middlewares = _a.middlewares;
-    return __awaiter(void 0, void 0, void 0, function () {
-        var app;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4 /*yield*/, keystone.connect()];
-                case 1:
-                    _b.sent();
-                    app = express();
-                    app.use(middlewares).listen(4000);
-                    //TODO add this to setup function
-                    onReceive_1.mqttOnMessageCallback.push(timerLdbMqttHandler_1.mqttTimerLdbHandler);
-                    onReceive_1.mqttOnMessageCallback.push(mqttTimeHandler_1.mqttTimeHandler);
-                    return [2 /*return*/];
-            }
-        });
+exports.googleAuthRouter = express.Router();
+var googleStatergy = require("./googleStatergy");
+var http = require('http');
+var url = require('url');
+function redirect(response, url) {
+    response.writeHead(302, {
+        Location: url,
     });
-});
-var client = mqtt.connect("mqtt://192.168.1.6");
-client.on("connect", function () {
-    client.subscribe("$share/group/HUE/+/up", { qos: 0 }, function () {
-        console.log("Subscribed to wildcard topic");
+    response.end();
+}
+exports.googleAuthRouter.get("/", passport.authenticate('google', { scope: ['profile', 'email'] }));
+exports.googleAuthRouter.get("/redirect", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, res.send("test google auth")];
     });
-});
-client.on("message", function (topic, message) {
-    onReceive_1.onMessage(topic, message, mqLog);
-});
-exports.publish = function (topic, payload, qos) {
-    if (qos === void 0) { qos = 0; }
-    client.publish(topic, payload);
-};
-var mqLog = function (s) {
-    if (true)
-        console.log('[[ MQTT ' + process.pid + ' ]]  ' + s);
-};
+}); });
+exports.googleAuthRouter.get("/proxy", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var parameters;
+    return __generator(this, function (_a) {
+        parameters = url.parse(req.url, true).query;
+        console.log(">>>>>" + JSON.stringify(parameters));
+        if (parameters.authServiceUrl) {
+            // redirect user to the authUrl
+            console.log("<<<" + decodeURIComponent(parameters.authServiceUrl));
+            return [2 /*return*/, res.redirect(decodeURIComponent(parameters.authServiceUrl))];
+        }
+        // redirect response from the auth service to your application
+        return [2 /*return*/, redirect(res, "hueite_app://")];
+    });
+}); });

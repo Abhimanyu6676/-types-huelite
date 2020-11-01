@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//@ts-ignore
 var _a = require("@keystonejs/fields"), TText = _a.Text, Integer = _a.Integer, Checkbox = _a.Checkbox, Relationship = _a.Relationship;
 module.exports = {
     fields: {
@@ -28,6 +28,10 @@ module.exports = {
             ref: "hue_timer.device",
             many: true,
         },
+        user: {
+            type: Relationship,
+            ref: "user.devices"
+        }
     },
     labelField: "selectionName",
 };
