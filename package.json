@@ -36,6 +36,7 @@
     "cross-env": "^7.0.0",
     "express-session": "^1.17.1",
     "mqtt": "^4.2.1",
+    "node-deeplink": "^0.6.0",
     "passport": "^0.4.1",
     "passport-google-oauth2": "^0.2.0"
   },
