@@ -8,17 +8,20 @@ import { addNewProduct, findProductWithMac } from "./services/dbHelper/productDb
 import { mqttTimerLdbHandler } from "./mqtt/mqttLdbHandlers/timerLdbMqttHandler";
 import { HUE_TIMERS } from ".";
 import { mqttTimeHandler } from "./mqtt/mqttTimeHandler";
+const { NODE_ENV, PORT } = require("./config")
+
+
 
 keystone
   .prepare({
     apps: apps,
-    dev: process.env.NODE_ENV !== "production",
+    dev: NODE_ENV !== "production",
   })
   //@ts-ignore
   .then(async ({ middlewares }) => {
     await keystone.connect();
     const app = express();
-    app.use(middlewares).listen(4000);
+    app.use(middlewares).listen(PORT);
     //TODO add this to setup function
     mqttOnMessageCallback.push(mqttTimerLdbHandler);
     mqttOnMessageCallback.push(mqttTimeHandler)
