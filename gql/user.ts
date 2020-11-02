@@ -1,0 +1,55 @@
+export const gql_getUserWithFbId = (`query(
+    $fbId:String!
+  ){
+    allUsers(where:{fbId:$fbId}, first:1){
+      id
+      userName
+      email
+      fbId
+      googleId
+      devices{
+        id
+        deviceName
+        Mac
+        groupName
+        lastState
+        IP
+        timers{
+          id
+          HR
+          MIN
+          DAYS
+          DT
+          ET
+          ldb{
+            id
+            TS
+            DST
+            DBS
+          }
+        }
+      }
+    }
+  }`)
+
+export const gql_createUser = (`mutation(
+    $userName:String,
+    $email:String!,
+    $fbId:String,
+    $googleId:String,
+    $password:String
+  ){
+    createUser(data:{
+      userName:$userName,
+      email:$email,
+      fbId:$fbId,
+      googleId:$googleId,
+      password:$password
+    }){
+      id
+      userName
+      email
+      fbId
+      googleId
+    }
+  }`)
