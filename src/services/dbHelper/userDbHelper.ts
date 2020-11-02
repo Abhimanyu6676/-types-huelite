@@ -57,7 +57,7 @@ type findUserWithEmail_t = (obj: { email: string }, _log?: logFun_t) => Promise<
  * @returns Array of User: { userName, email, fbId, googleId}
  *
  */
-export const findUserWithEmail: findUserWithEmail_t = async ({ email }, _log) => {
+export const DB_getUser_email: findUserWithEmail_t = async ({ email }, _log) => {
   const log = (s: string) => { _log && _log("<findUserWithEmail> " + s) }
   const user = await keystone
     .executeQuery(query_findUserWithEmail(), {

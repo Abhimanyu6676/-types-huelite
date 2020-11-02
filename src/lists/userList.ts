@@ -10,12 +10,15 @@ module.exports = {
             //TODO set type email
             type: Text,
             isRequired: true,
+            isUnique: true,
         },
         fbId: {
             type: Text,
+            //isUnique: true,
         },
         googleId: {
             type: Text,
+            //isUnique: true,
         },
         password: { type: Password },
         devices: { type: Relationship, ref: "hue_product.user", many: true, }
