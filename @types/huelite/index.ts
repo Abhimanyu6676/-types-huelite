@@ -37,3 +37,6 @@ export type HUE_LDB_t = {
     DST: number,
     DBS: number,
 }
+
+
+export interface err_i { errCode: "UNKNOWN_ERR" | "NO_USER" | "USER_CREATION_FAILED" | "DUPLICATE_EMAIL" | "PASSWORD_MIN_LENGTH", errMsg: string, error: any }
