@@ -1,5 +1,5 @@
 export type HUE_USER_t = {
-    id: string,
+    id: string | undefined,
     userName?: string,
     email: string,
     fbId?: string,
@@ -8,7 +8,7 @@ export type HUE_USER_t = {
 }
 
 export type HUE_DEVICE_t = {
-    id: string,
+    id: string | undefined,
     Mac: string,
     IP?: string,
     deviceName?: string,
@@ -20,7 +20,7 @@ export type HUE_DEVICE_t = {
 }
 
 export type HUE_TIMER_t = {
-    id: string,
+    id: string | undefined,
     device?: HUE_DEVICE_t,
     HR?: number,
     MIN?: number,
@@ -32,7 +32,7 @@ export type HUE_TIMER_t = {
 }
 
 export type HUE_LDB_t = {
-    id: string,
+    id: string | undefined,
     TS: number,
     DST: number,
     DBS: number,
