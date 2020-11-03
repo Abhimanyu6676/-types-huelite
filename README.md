@@ -11,3 +11,14 @@ Once running, the Keystone Admin UI is reachable via `localhost:3000/admin`.
 ## Next steps
 
 This example has no authentication, meaning anyone can add or remove todo items. You can lean more about access control and authentication at: `https://keystonejs.com/api/access-control`.
+
+## git subtrees
+
+    # repo - @types/huelite
+        # subtree - https://github.com/Abhimanyu6676/-types-huelite
+        # branch - main
+
+## git commands
+
+    # pull to latest @types/huelite
+    => git subtree pull --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash
