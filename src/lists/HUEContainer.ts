@@ -1,24 +1,42 @@
 //@ts-ignore
-const { Integer, Checkbox, Select, Relationship, } = require("@keystonejs/fields");
+const { Integer, Checkbox, Select, Relationship, Text } = require("@keystonejs/fields");
 
 module.exports = {
-  fields: {
-    db: {/* DB that is related to this ldb */
-      type: Relationship,
-      ref: "hue_timer.ldb",
-      isRequired: true,
+    fields: {
+        groupName: {
+            type: Text,
+        },
+        groupUUID: {
+            type: Text,
+            isRequired: true,
+        },
+        groupAdmin: {
+            type: Text,
+        },
+        activeMode: {
+            type: Text,
+        },
+        conType: {
+            type: Integer,
+            isRequired: true
+        },
+        conCategory: {
+            type: Integer,
+            isRequired: true
+        },
+        timers: {
+            type: Text,
+            many: true
+        },
+        user: {
+            type: Relationship,
+            ref: "user.containers",
+            isRequired: true
+        },
+        devices: {
+            type: Relationship,
+            ref: "hue_product.container",
+            many: true
+        },
     },
-    TS: {
-      type: Integer,
-      isRequired: true,
-    },
-    DST: {
-      type: Integer,
-      isRequired: true,
-    },
-    DBS: {
-      type: Integer,
-      isRequired: true,
-    },
-  },
 };

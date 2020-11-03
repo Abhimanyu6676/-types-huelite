@@ -33,6 +33,10 @@ module.exports = {
     user: {
       type: Relationship,
       ref: "user.devices"
+    },
+    container:{
+      type:Relationship,
+      ref:"hue_container.devices"
     }
   },
   labelField: "selectionName",

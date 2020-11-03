@@ -20,5 +20,11 @@ This example has no authentication, meaning anyone can add or remove todo items.
 
 ## git commands
 
-    # pull to latest @types/huelite
+    # pull @types/huelite latest
     => git subtree pull --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash
+
+    # push @types/huelite changes
+    => git subtree push --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash
+
+    # `add` subtree@types/huelite latest
+    => git subtree add --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash

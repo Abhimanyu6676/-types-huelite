@@ -25,7 +25,7 @@ export const timerUpdateResolver = async (root: any, args: { Mac: string, HR: nu
     console.log(JSON.stringify(args));
     console.log("\n\n-------------------------------------------------------------------");
     console.log("---------------------- " + JSON.stringify(timerFromQuery));
-    if (timerFromQuery) {
+    if (timerFromQuery?.id && timerFromQuery?.ldb.id) {
         //TODO modify timer and timerLdb
         const updatedTimerNLdb = await updateTimerAndLdbWithId({
             timerId: timerFromQuery.id,

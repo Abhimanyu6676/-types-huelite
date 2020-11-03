@@ -21,6 +21,7 @@ module.exports = {
             //isUnique: true,
         },
         password: { type: Password },
-        devices: { type: Relationship, ref: "hue_product.user", many: true, }
+        devices: { type: Relationship, ref: "hue_product.user", many: true, },
+        containers: { type: Relationship, ref: "hue_container.user", many: true }
     },
 };

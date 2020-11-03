@@ -21,6 +21,7 @@ const FeaturesSchema = require("./lists/featuresList");
 const HUE_PRODUCT_Schema = require("./lists/HUEProduct");
 const HUE_TIMER_Schema = require("./lists/HUETimer");
 const HUE_LDB_Schema = require("./lists/HUE_ldb");
+const HUE_CONTAINER_Schema = require("./lists/HUEContainer");
 const UserSchema = require("./lists/userList");
 
 //::Custom Imports
@@ -55,6 +56,7 @@ export const HUE_PRODUCTS = keystone.createList("hue_product", HUE_PRODUCT_Schem
 //@ts-ignore
 export const HUE_TIMERS = keystone.createList("hue_timer", HUE_TIMER_Schema);
 export const HUE_LDB = keystone.createList("hue_ldb", HUE_LDB_Schema);
+export const HUE_Container = keystone.createList("hue_container", HUE_CONTAINER_Schema);
 
 export const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,

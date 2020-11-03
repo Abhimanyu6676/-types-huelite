@@ -103,7 +103,7 @@ const process_mqttUpstreamTimerPayload: (Mac: string, timer: mqttUpstreamTimerPa
         //@ts-ignore
         const timerFromQuery = await findTimerWithMacAndDst({ Mac, DST: timer.DST }, log)
         if (timerFromQuery) {
-            if (timer.TS && timerFromQuery.ldb.TS && timer.TS > timerFromQuery.ldb.TS) {
+            if (timer.TS && timerFromQuery?.id && timerFromQuery?.ldb?.id && timerFromQuery.ldb.TS && timer.TS > timerFromQuery.ldb.TS) {
                 log("Server timestamp outdated saving new timer to DB: " + timer.DST)
                 const updatedTimerNLdb = await updateTimerAndLdbWithId({
                     timerId: timerFromQuery.id,
