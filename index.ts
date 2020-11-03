@@ -1,4 +1,4 @@
-import { HUE_DEVICES_store_t } from "../../redux/reducers/DeviceListReducer";
+
 
 export enum HUE_DEVICE_CONTAINER_TYPE_e {
     SINGLETON = 1,
@@ -13,6 +13,7 @@ export enum HUE_GROUP_CATEGORIES_e {
     STRIP_NEO = 4,
 }
 
+export type HUE_DEVICES_store_t = (HUE_DEVICE_t[] & { socket: any })
 
 export type HUE_USER_t = {
     id: string | undefined,
