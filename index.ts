@@ -13,16 +13,25 @@ export enum HUE_GROUP_CATEGORIES_e {
     STRIP_NEO = 4,
 }
 
-export type HUE_DEVICES_store_t = (HUE_DEVICE_t[] & { socket: any })
-
 export type HUE_USER_t = {
     id: string | undefined,
     userName?: string,
     email: string,
     fbId?: string,
     googleId?: string
-    devices?: HUE_DEVICE_t[]
+    containers?: HUE_Container_t[]
 }
+
+export type HUE_Container_t = {
+    groupName: string;
+    groupUUID: string;
+    groupAdmin: string;
+    activeMode: string;
+    conType: HUE_DEVICE_CONTAINER_TYPE_e;
+    conCategory: HUE_GROUP_CATEGORIES_e;
+    timers: HUE_TIMER_group_t[];
+    devices: HUE_Device_t[];
+};
 
 export type HUE_CONTAINER_t = {
     groupName: string;
@@ -31,11 +40,11 @@ export type HUE_CONTAINER_t = {
     activeMode: string;
     conType: HUE_DEVICE_CONTAINER_TYPE_e;
     conCategory: HUE_GROUP_CATEGORIES_e;
-    timers: (HUE_TIMER_group_t | undefined)[];
-    devices: HUE_DEVICES_store_t[];
+    timers: HUE_TIMER_group_t[];
+    devices: HUE_DEVICE_t[];
 };
 
-export type HUE_DEVICE_t = {
+export type HUE_Device_t = {
     id: string | undefined,
     Mac: string,
     IP?: string,
@@ -46,12 +55,14 @@ export type HUE_DEVICE_t = {
     user?: HUE_USER_t
     //add timers to data type timers
 }
+export type HUE_DEVICE_t = (HUE_Device_t & { socket: any })
+
 
 export type HUE_TIMER_group_t = HUE_TIMER_t & { devices: string[] }
 
 export type HUE_TIMER_t = {
     id: string | undefined,
-    device?: HUE_DEVICE_t,
+    device?: HUE_Device_t,
     HR?: number,
     MIN?: number,
     DT?: number,
