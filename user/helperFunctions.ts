@@ -15,12 +15,14 @@ export const convert_hueContainer_backendToLocal: convert_hueContainer_backendTo
 
 
 type convert_hueDevice_backendToLocal_t = (props: { devices: HUE_Device_t[], socket?: any }, _log?: logFun_t) => HUE_DEVICE_t[]
+//@ts-ignore
 export const convert_hueDevice_backendToLocal: convert_hueDevice_backendToLocal_t = ({ devices, socket = undefined }, _log) => {
     const log: logFun_t = (s) => { _log && _log("[convert_hueDevice_backendToLocal_t] " + s) }
     return devices.map((device, d_index) => {
         return {
             ...device,
-            socket
+            socket,
+            hsv: [40, 100, 100]
         }
     })
 }

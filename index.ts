@@ -59,7 +59,11 @@ export type HUE_Container_t = {
 };
 
 /** @description >- Client side Local representation of device Object */
-export type HUE_DEVICE_t = (HUE_Device_t & { socket: any, id?: string, })
+export type HUE_DEVICE_t = (HUE_Device_t & {
+    socket: any,
+    id?: string,
+    hsv: [number, number, number]/** whole numbers [360, 100, 100] */
+})
 
 
 /** @description >- backend representation of device Object */
@@ -68,6 +72,7 @@ export type HUE_Device_t = {
     Mac: string,
     IP?: string,
     deviceName?: string,
+    hsv: string,
     groupName?: string,
     lastState?: string,
     timers?: HUE_TIMER_t[]
