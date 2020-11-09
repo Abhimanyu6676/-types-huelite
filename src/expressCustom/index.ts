@@ -1,5 +1,5 @@
 const express = require("express");
-import { AuthRouter as authRouter } from "./router/auth/authHandler";
+import { AuthRouter as authRouter } from "../router/auth/authHandler";
 var bodyParser = require('body-parser')
 
 //const app = express();
@@ -40,7 +40,7 @@ export class Express {
 
     //@ts-ignore
     app.get("/backend/test", function (req, res) {
-      res.send("Hello from **** HUElite!!");
+      res.status(500).send("Hello from **** HUElite!!");
     });
 
     app.use('/backend/auth', authRouter)

@@ -25,7 +25,7 @@ const HUE_CONTAINER_Schema = require("./lists/HUEContainer");
 const UserSchema = require("./lists/userList");
 
 //::Custom Imports
-import { Express } from "./Express";
+import { Express } from "./expressCustom";
 import { timerUpdateResolverInput, timerUpdateResolverOutput, type_TimerObj, timerUpdateResolver, type_timerLdbObj, createTimerResolverOutput, createTimerWithMacResolver } from "./services/resolvers/timerResolver";
 
 //::Server Configurations

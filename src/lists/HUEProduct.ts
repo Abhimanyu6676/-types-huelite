@@ -19,6 +19,11 @@ module.exports = {
       type: TText,
       //isRequired: true,
     },
+    hsv: {
+      type: Integer,
+      many: true,
+      defaultValue: "50,100,100"//TODO match the pattern of HSV to [h/360, s/100, s/100]
+    },
     groupName: {
       type: TText,
     },
@@ -34,9 +39,9 @@ module.exports = {
       type: Relationship,
       ref: "user.devices"
     },
-    container:{
-      type:Relationship,
-      ref:"hue_container.devices"
+    container: {
+      type: Relationship,
+      ref: "hue_container.devices"
     }
   },
   labelField: "selectionName",
