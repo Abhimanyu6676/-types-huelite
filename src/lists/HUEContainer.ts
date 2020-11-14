@@ -33,6 +33,10 @@ module.exports = {
             ref: "user.containers",
             isRequired: true
         },
+        ts: {
+            type: Integer,
+            isRequired: true
+        },
         devices: {
             type: Relationship,
             ref: "hue_product.container",

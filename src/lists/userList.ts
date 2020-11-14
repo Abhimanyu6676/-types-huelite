@@ -20,6 +20,10 @@ module.exports = {
             type: Text,
             //isUnique: true,
         },
+        ts: {
+            type: Integer,
+            isRequired: true
+        },
         password: { type: Password },
         devices: { type: Relationship, ref: "hue_product.user", many: true, },
         containers: { type: Relationship, ref: "hue_container.user", many: true }

@@ -19,6 +19,9 @@ module.exports = {
       type: TText,
       //isRequired: true,
     },
+    ssid: {
+      type: TText,
+    },
     hsv: {
       type: Integer,
       many: true,
@@ -38,6 +41,10 @@ module.exports = {
     user: {
       type: Relationship,
       ref: "user.devices"
+    },
+    ts: {
+      type: Integer,
+      isRequired: true
     },
     container: {
       type: Relationship,
