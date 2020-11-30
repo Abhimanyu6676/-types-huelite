@@ -1,4 +1,4 @@
-import { HUE_Container_t, HUE_CONTAINER_t, HUE_DEVICE_t, HUE_Device_t } from ".."
+import { HUE_Container_t, HUE_CONTAINER_t, HUE_DEVICE_t, HUE_Device_t } from "../globalTypes"
 import { logFun_t } from "../../../util/logger"
 
 type convert_hueContainer_backendToLocal_t = (props: { containers: HUE_Container_t[], socket?: any }, _log?: logFun_t) => HUE_CONTAINER_t[]
