@@ -33,10 +33,10 @@ export interface HUE_CONTAINER_t extends timestamp_i {
 /** @description >- backend representation of conatiner Object */
 export interface HUE_Container_t extends timestamp_i {
     id: string,
-    groupName: string;
-    groupUUID: string;
-    groupAdmin: string;
-    activeMode: string;
+    conName: string;
+    conUUID: string;
+    conAdmin?: string;
+    activeMode?: string;
     conType: HUE_CONTAINER_TYPE_e;
     conCategory: HUE_CONTAINER_CATEGORIES_e;
     timers?: HUE_TIMER_group_t[];

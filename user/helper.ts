@@ -22,7 +22,7 @@ export const convert_hueDevice_backendToLocal: convert_hueDevice_backendToLocal_
         return {
             ...device,
             socket,
-            hsv: [40, 100, 100]
+            hsv: { h: 0, s: 75, v: 100 }
         }
     })
 }

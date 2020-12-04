@@ -10,7 +10,7 @@ export interface HUE_DEVICE_t extends Omit<Omit<Omit<HUE_Device_t, "id">, "hsv">
     socket?: any,
     id?: string,
     IP: string,
-    hsv?: [number, number, number]/** whole numbers [360, 100, 100] */
+    hsv: { h: number, s: number, v: number }/** whole numbers [360, 100, 100] */
 }
 /** @description >- backend representation of device Object */
 export interface HUE_Device_t extends timestamp_i {
