@@ -15,9 +15,10 @@ export interface HUE_DEVICE_t extends Omit<Omit<Omit<HUE_Device_t, "id">, "hsv">
 /** @description >- backend representation of device Object */
 export interface HUE_Device_t extends timestamp_i {
     id: string,
+    Hostname: string,
+    deviceName: string,
     Mac: string,
     IP?: string,
-    deviceName?: string,
     ssid?: string,
     hsv?: string,
     groupName?: string,
