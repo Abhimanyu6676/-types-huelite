@@ -113,7 +113,7 @@ module.exports = {
       graphiqlPath: "/backend/admin/graphiql",
       enableDefaultRoute: false,
     }),
-    //new StaticApp({ path: "/", src: "../hue_web/src/serverImages" }),
+    //new StaticApp({ path: "/static", src: "../../hue_web/build/images" }),
     //new StaticApp({ path: "/", src: "../HueliteWeb/build", fallback: 'index.html', }),
   ],
   HUE_PRODUCTS,

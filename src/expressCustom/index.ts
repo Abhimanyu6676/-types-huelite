@@ -1,6 +1,7 @@
 const express = require("express");
 import { AuthRouter as authRouter } from "../router/auth/authHandler";
 var bodyParser = require('body-parser')
+var path = require('path');
 
 //const app = express();
 //const aedes = require("aedes");
@@ -42,6 +43,8 @@ export class Express {
     app.get("/backend/test", function (req, res) {
       res.status(500).send("Hello from **** HUElite!!");
     });
+
+    app.use('/backend/static', express.static(path.join(__dirname, 'public')))
 
     app.use('/backend/auth', authRouter)
 

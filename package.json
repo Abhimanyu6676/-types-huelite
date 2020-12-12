@@ -18,7 +18,9 @@
     "_start": "cross-env NODE_ENV=production keystone start",
     "nodemon": "cross-env DISABLE_LOGGING=true npx nodemon src/Pindex.ts",
     "_nodemon": "cross-env DISABLE_LOGGING=true npx nodemon build/src/Pindex.js",
-    "create-tables": "keystone create-tables"
+    "create-tables": "keystone create-tables",
+    "PUSH_TYPES": "git subtree push --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash",
+    "PULL_TYPES": "git subtree pull --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash"
   },
   "dependencies": {
     "@keystonejs/adapter-mongoose": "^8.1.0",
