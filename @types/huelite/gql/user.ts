@@ -24,6 +24,7 @@ const device_fields_compact_timer = `id
 deviceName
 Mac
 groupName
+hsv
 lastState
 IP
 timers{
