@@ -12,19 +12,19 @@ module.exports = {
             isRequired: true,
             isUnique: true,
         },
-        fbId: {
-            type: Text,
-            isUnique: true,
-        },
-        googleId: {
-            type: Text,
-            isUnique: true,
-        },
         ts: {
-            type: Integer,
-            isRequired: true
+            type: Integer
         },
         password: { type: Password },
         devices: { type: Relationship, ref: "hue_device.user", many: true, },
+    },
+    labelField: "email",
+    hooks: {
+        //@ts-ignore Hooks for create and update operations
+        resolveInput: ({ operation, existingItem, originalInput, resolvedData, context, listKey, fieldPath }) => {
+            // Input resolution logic. Object returned is used in place of `resolvedData`.
+            return { ...originalInput, ts: Math.floor(Date.now() / 1000) }
+        }
+
     },
 };

@@ -23,9 +23,8 @@ module.exports = {
       type: TText,
     },
     hsv: {
-      type: Integer,
-      many: true,
-      defaultValue: "50,100,100"//TODO match the pattern of HSV to [h/360, s/100, s/100]
+      type: TText,
+      defaultValue: "0,100,100"//TODO match the pattern of HSV to [h/360, s/100, s/100]
     },
     groupName: {
       type: TText,
@@ -47,7 +46,7 @@ module.exports = {
       isRequired: true
     },
   },
-  labelField: "hostname",
+  labelField: "Hostname",
 };
 
 
