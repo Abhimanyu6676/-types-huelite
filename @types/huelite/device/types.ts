@@ -18,9 +18,9 @@ export interface HUE_Device_t extends timestamp_i {
     Hostname: string,
     deviceName: string,
     Mac: string,
-    IP?: string,
+    IP: string,
     ssid?: string,
-    hsv?: string,
+    hsv: string,
     groupName?: string,
     lastState?: string,
     timers?: HUE_TIMER_t[]
