@@ -11,7 +11,7 @@ module.exports = {
       isRequired: true,
       isUnique: true,
     },
-    HostName: {
+    Hostname: {
       type: TText,
       //isRequired: true,
     },
@@ -46,12 +46,8 @@ module.exports = {
       type: Integer,
       isRequired: true
     },
-    container: {
-      type: Relationship,
-      ref: "hue_container.devices"
-    }
   },
-  labelField: "selectionName",
+  labelField: "hostname",
 };
 
 

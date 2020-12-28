@@ -5,7 +5,7 @@ module.exports = {
   fields: {
     device: {
       type: Relationship,
-      ref: "hue_product.timers",
+      ref: "hue_device.timers",
       isRequired: true,
     },
     HR: {

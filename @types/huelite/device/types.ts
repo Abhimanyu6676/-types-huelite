@@ -6,7 +6,7 @@ import { HUE_User_t } from "../user/types"
 
 
 /** @description >- Client side Local representation of device Object */
-export interface HUE_DEVICE_t extends Omit<Omit<Omit<HUE_Device_t, "id">, "hsv">, "IP">, timestamp_i {
+export interface HUE_DEVICE_t extends Omit<Omit<Omit<HUE_Device_t, "id">, "hsv">, "IP"> {
     socket?: any,
     id?: string,
     IP: string,

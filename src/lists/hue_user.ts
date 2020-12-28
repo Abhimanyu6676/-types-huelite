@@ -14,18 +14,17 @@ module.exports = {
         },
         fbId: {
             type: Text,
-            //isUnique: true,
+            isUnique: true,
         },
         googleId: {
             type: Text,
-            //isUnique: true,
+            isUnique: true,
         },
         ts: {
             type: Integer,
             isRequired: true
         },
         password: { type: Password },
-        devices: { type: Relationship, ref: "hue_product.user", many: true, },
-        containers: { type: Relationship, ref: "hue_container.user", many: true }
+        devices: { type: Relationship, ref: "hue_device.user", many: true, },
     },
 };

@@ -18,11 +18,10 @@ const VarientSchema = require("./lists/varientList");
 const SelectorDatasetSchema = require("./lists/selectorData");
 const SelectorSchema = require("./lists/selectorList");
 const FeaturesSchema = require("./lists/featuresList");
-const HUE_PRODUCT_Schema = require("./lists/HUEProduct");
+const HUE_DEVICE_Schema = require("./lists/hue_device");
 const HUE_TIMER_Schema = require("./lists/HUETimer");
 const HUE_LDB_Schema = require("./lists/HUE_ldb");
-const HUE_CONTAINER_Schema = require("./lists/HUEContainer");
-const UserSchema = require("./lists/userList");
+const UserSchema = require("./lists/hue_user");
 
 //::Custom Imports
 import { Express } from "./expressCustom";
@@ -52,11 +51,9 @@ keystone.createList("selectorDataset", SelectorDatasetSchema);
 keystone.createList("selector", SelectorSchema);
 keystone.createList("featuresList", FeaturesSchema);
 keystone.createList("user", UserSchema);
-export const HUE_PRODUCTS = keystone.createList("hue_product", HUE_PRODUCT_Schema);
-//@ts-ignore
+export const HUE_PRODUCTS = keystone.createList("hue_device", HUE_DEVICE_Schema);
 export const HUE_TIMERS = keystone.createList("hue_timer", HUE_TIMER_Schema);
 export const HUE_LDB = keystone.createList("hue_ldb", HUE_LDB_Schema);
-export const HUE_Container = keystone.createList("hue_container", HUE_CONTAINER_Schema);
 
 export const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
