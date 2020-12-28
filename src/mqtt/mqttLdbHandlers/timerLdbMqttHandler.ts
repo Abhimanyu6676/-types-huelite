@@ -41,7 +41,7 @@ const process_mqttUpstreamLdbPayload: (Mac: string, ldb: mqttUpstreamLdbPayload_
         //@ts-ignore
         const timerFromQuery = await findTimerWithMacAndDst({ Mac, DST: ldb.DST }, log)
         if (timerFromQuery) {
-            if (ldb.TS && timerFromQuery.ldb.TS && ldb.TS > timerFromQuery.ldb.TS) {
+            if (ldb.TS && timerFromQuery.ldb?.TS && ldb.TS > timerFromQuery.ldb.TS) {
                 log("Server timestamp outdated, requesting timer payload for DST : " + ldb.DST)
                 publish(
                     "HUE/" + Mac + "/dn",
@@ -52,7 +52,7 @@ const process_mqttUpstreamLdbPayload: (Mac: string, ldb: mqttUpstreamLdbPayload_
                         DBS: timerFromQuery.ldb.DBS,
                     })
                 );
-            } else if ((ldb.TS && timerFromQuery.ldb.TS && ldb.TS < timerFromQuery.ldb.TS)) {
+            } else if ((ldb.TS && timerFromQuery.ldb?.TS && ldb.TS < timerFromQuery.ldb.TS)) {
                 log("device timestamp outdated, publishing timer payload to device");
                 publish("HUE/" + Mac + "/dn", JSON.stringify({
                     cmd: MQTT_DOWNSTREAM_TIMER_PAYLOAD,
@@ -65,7 +65,7 @@ const process_mqttUpstreamLdbPayload: (Mac: string, ldb: mqttUpstreamLdbPayload_
                     DBS: timerFromQuery.ldb.DBS,
                     DST: timerFromQuery.ldb.DST,
                 }));
-            } else if ((ldb.TS && timerFromQuery.ldb.TS && ldb.TS == timerFromQuery.ldb.TS)) {
+            } else if ((ldb.TS && timerFromQuery.ldb?.TS && ldb.TS == timerFromQuery.ldb.TS)) {
                 log("server and device timestamp matched");
             }
         }
@@ -122,11 +122,11 @@ const process_mqttUpstreamTimerPayload: (Mac: string, timer: mqttUpstreamTimerPa
                 } else {
                     log('timer and ldb update failed')
                 }
-            } else if ((timer.TS && timerFromQuery.ldb.TS && timer.TS < timerFromQuery.ldb.TS)) {
+            } else if ((timer.TS && timerFromQuery.ldb?.TS && timer.TS < timerFromQuery.ldb.TS)) {
                 log("device timestamp outdated, publishing timer payload to device for DST " + timer.DST);
                 //TODO send timer to device if device ts outdated
 
-            } else if ((timer.TS && timerFromQuery.ldb.TS && timer.TS == timerFromQuery.ldb.TS)) {
+            } else if ((timer.TS && timerFromQuery.ldb?.TS && timer.TS == timerFromQuery.ldb.TS)) {
                 log("server and device timestamp matched " + timer.DST);
             }
 

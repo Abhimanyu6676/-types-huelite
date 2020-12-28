@@ -1,4 +1,4 @@
-import { AuthRouter } from "../authHandler";
+import { AuthRouter } from "..";
 
 
 AuthRouter.get('/aa', function (req: any, res: any) {

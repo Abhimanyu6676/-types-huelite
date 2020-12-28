@@ -1,10 +1,10 @@
-import { HUE_USER_t } from "../../../@types/huelite";
+import { types } from "../../../@types/huelite";
 import { query_findUserWithEmail } from "../../../@types/huelite/gql/user";
 import { logFun_t } from "../../index";
 import { keystone } from "../../index"
 
 
-type findUserWithEmail_t = (obj: { email: string }, _log?: logFun_t) => Promise<HUE_USER_t | undefined>
+type findUserWithEmail_t = (obj: { email: string }, _log?: logFun_t) => Promise<types.HUE_USER_t | undefined>
 /**
  * find specific hueTimer with LDB.DST and MAC
  *

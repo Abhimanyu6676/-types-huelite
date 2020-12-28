@@ -1,12 +1,5 @@
-import { HUE_DEVICE_t, HUE_LDB_t } from "../../@types/huelite";
-
-
-const {
-  Integer,
-  Checkbox,
-  Select,
-  Relationship,
-} = require("@keystonejs/fields");
+//@ts-ignore
+const { Integer, Checkbox, Select, Relationship, } = require("@keystonejs/fields");
 
 module.exports = {
   fields: {

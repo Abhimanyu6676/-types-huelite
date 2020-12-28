@@ -1,5 +1,5 @@
 const express = require("express");
-import { AuthRouter as authRouter } from "../router/auth/authHandler";
+import authRouter from "./router/auth";
 var bodyParser = require('body-parser')
 var path = require('path');
 

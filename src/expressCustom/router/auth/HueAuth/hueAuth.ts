@@ -1,9 +1,12 @@
 const express = require("express");
 export var hueAuthRouter = express.Router();
 import { userInfo } from "os";
-import { authStrategy, logFun_t } from "../../../index"
-import { DB_getUser_email } from "../../../services/dbHelper/userDbHelper";
+import { authStrategy, logFun_t } from "../../../../index"
+import { DB_getUser_email } from "../../../../services/dbHelper/userDbHelper";
 
+hueAuthRouter.get("/signin", function (req: any, res: any) {
+    res.status(500).send("HUElite Signin");
+});
 
 hueAuthRouter.post('/signin', async (req: any, res: any) => {
     const log: logFun_t = (s) => { console.log("<<SIGNIN POST ROUTE>> " + s) }
