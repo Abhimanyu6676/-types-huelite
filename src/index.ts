@@ -19,6 +19,8 @@ const SelectorDatasetSchema = require("./lists/selectorData");
 const SelectorSchema = require("./lists/selectorList");
 const FeaturesSchema = require("./lists/featuresList");
 const HUE_DEVICE_Schema = require("./lists/hue_device");
+const HUE_TIMER_Schema = require("./lists/HUETimer");
+const HUE_LDB_Schema = require("./lists/HUE_ldb");
 const UserSchema = require("./lists/hue_user");
 
 //::Custom Imports
@@ -50,6 +52,8 @@ keystone.createList("selector", SelectorSchema);
 keystone.createList("featuresList", FeaturesSchema);
 keystone.createList("user", UserSchema);
 export const HUE_PRODUCTS = keystone.createList("hue_device", HUE_DEVICE_Schema);
+export const HUE_TIMERS = keystone.createList("hue_timer", HUE_TIMER_Schema);
+export const HUE_LDB = keystone.createList("hue_ldb", HUE_LDB_Schema);
 
 export const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
@@ -62,8 +66,26 @@ export const authStrategy = keystone.createAuthStrategy({
 
 
 keystone.extendGraphQLSchema({
-  types: [],
-  mutations: [],
+  types: [
+    {
+      type: timerUpdateResolverOutput,
+    }, {
+      type: type_TimerObj,
+    }, {
+      type: type_timerLdbObj,
+    }, {
+      type: createTimerResolverOutput,
+    }
+  ],
+  mutations: [
+    {
+      schema: 'updateTimer(Mac: String!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, TS: Int!, DST: Int!, DBS: Int!): timerUpdateResolverOutput',
+      resolver: timerUpdateResolver,
+    }, {
+      schema: 'createTimerWithDeviceMac(Mac: String!, HR: Int!, MIN:Int!, DAYS: Int!, DT: Int!, ET: Int!, TS: Int!, DST: Int!, DBS: Int!): createTimerResolverOutput',
+      resolver: createTimerWithMacResolver
+    }
+  ],
   queries: [],
 });
 
@@ -92,6 +114,8 @@ module.exports = {
     //new StaticApp({ path: "/", src: "../HueliteWeb/build", fallback: 'index.html', }),
   ],
   HUE_PRODUCTS,
+  HUE_TIMERS,
+  HUE_LDB,
 };
 
 

@@ -24,7 +24,7 @@ module.exports = {
     },
     hsv: {
       type: TText,
-      defaultValue: "0-100-100"//TODO match the pattern of HSV to [h/360, s/100, s/100]
+      defaultValue: "0,100,100"//TODO match the pattern of HSV to [h/360, s/100, s/100]
     },
     groupName: {
       type: TText,
@@ -33,7 +33,9 @@ module.exports = {
       type: TText,
     },
     timers: {
-      type: TText,
+      type: Relationship,
+      ref: "hue_timer.device",
+      many: true,
     },
     user: {
       type: Relationship,
@@ -48,7 +50,3 @@ module.exports = {
 };
 
 
-/**
- * ## changelog
- * - timer is set to be a json array string
- */
