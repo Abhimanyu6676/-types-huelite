@@ -19,6 +19,7 @@
     "nodemon": "cross-env DISABLE_LOGGING=true npx nodemon src/Pindex.ts",
     "_nodemon": "cross-env DISABLE_LOGGING=true npx nodemon build/src/Pindex.js",
     "create-tables": "keystone create-tables",
+    "ADD_TYPES": "git subtree add --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash",
     "PUSH_TYPES": "git subtree push --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash",
     "PULL_TYPES": "git subtree pull --prefix=@types/huelite https://github.com/Abhimanyu6676/-types-huelite main --squash"
   },
