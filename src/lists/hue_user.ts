@@ -15,8 +15,8 @@ module.exports = {
         ts: {
             type: Integer
         },
-        password: { type: Password },
-        devices: { type: Relationship, ref: "hue_device.user", many: true, },
+        password: { type: Password, rejectCommon: true },
+        devices: { type: Relationship, ref: "hue_device.user", many: true, isRequired: true },
     },
     labelField: "email",
     hooks: {
