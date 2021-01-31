@@ -1,8 +1,8 @@
 import { DEVICE_t, Device_t } from "../globalTypes"
-import { logger } from "../../../util/logger"
+//import { logger } from "../../../util/logger"
 import { TIMER_t } from "../timer"
 
-
+type logger = any
 
 type convert_Device_backendToLocal_t = (props: { devices: Device_t[], socket?: any, log?: logger }) => DEVICE_t[]
 //@ts-ignore
