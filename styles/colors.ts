@@ -1,3 +1,4 @@
+//@ts-ignore
 import { StyleSheet } from "react-native";
 
 export const textColors = {
