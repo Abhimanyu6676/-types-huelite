@@ -17,8 +17,6 @@ user{
     ${HUE_User_fields_no_devices}
 }`
 
-
-
 export const Device_fields_noUser = `id
 Hostname
 deviceName
